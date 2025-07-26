@@ -1,13 +1,28 @@
 local M = {}
 
 M.keys = {
+  -- Explorer
+  {
+    "<C-n>",
+    function()
+      Snacks.explorer.open()
+    end,
+    desc = "Toggle Explorer",
+  },
+  {
+    "<leader>e",
+    function()
+      Snacks.explorer.reveal()
+    end,
+    desc = "Focus [E]xplorer",
+  },
   -- Lazygit
   {
     "<leader>lg",
     function()
       Snacks.lazygit()
     end,
-    desc = "Lazygit",
+    desc = "[L]azy[g]it",
   },
   -- Picker
   {
@@ -163,41 +178,41 @@ M.picker = {
   matcher = {
     frecency = true,
   },
-  -- layouts = {
-  --   default = {
-  --     layout = {
-  --       box = "horizontal",
-  --       width = 0.8,
-  --       min_width = 120,
-  --       height = 0.8,
-  --       backdrop = false,
-  --       {
-  --         box = "vertical",
-  --         border = "solid",
-  --         title = "{title} {live} {flags}",
-  --         { win = "input", height = 1, border = "bottom" },
-  --         { win = "list", border = "none" },
-  --       },
-  --       { win = "preview", title = "{preview}", border = "solid", width = 0.5 },
-  --     },
-  --   },
-  --   vertical = {
-  --     layout = {
-  --       backdrop = false,
-  --       width = 0.8,
-  --       min_width = 80,
-  --       height = 0.8,
-  --       min_height = 30,
-  --       box = "vertical",
-  --       border = "solid",
-  --       title = "{title} {live} {flags}",
-  --       title_pos = "center",
-  --       { win = "input", height = 1, border = "bottom" },
-  --       { win = "list", border = "none" },
-  --       { win = "preview", title = "{preview}", height = 0.4, border = "top" },
-  --     },
-  --   },
-  -- },
+  layouts = {
+    default = {
+      layout = {
+        box = "horizontal",
+        width = 0.8,
+        min_width = 120,
+        height = 0.8,
+        backdrop = false,
+        {
+          box = "vertical",
+          border = "solid",
+          title = "{title} {live} {flags}",
+          { win = "input", height = 1, border = "bottom" },
+          { win = "list", border = "none" },
+        },
+        { win = "preview", title = "{preview}", border = "solid", width = 0.5 },
+      },
+    },
+    vertical = {
+      layout = {
+        backdrop = false,
+        width = 0.8,
+        min_width = 80,
+        height = 0.8,
+        min_height = 30,
+        box = "vertical",
+        border = "solid",
+        title = "{title} {live} {flags}",
+        title_pos = "center",
+        { win = "input", height = 1, border = "bottom" },
+        { win = "list", border = "none" },
+        { win = "preview", title = "{preview}", height = 0.4, border = "top" },
+      },
+    },
+  },
   sources = {
     files = {
       hidden = true,
@@ -287,14 +302,32 @@ M.picker = {
         },
       },
     },
+    ---@type snacks.picker.explorer.Config
+    explorer = {
+      layout = {
+        layout = {
+          position = "right",
+        },
+      },
+      win = {
+        list = {
+          keys = {
+            ["<C-n>"] = function()
+              Snacks.explorer.open()
+            end,
+          },
+        },
+      },
+    },
   },
 }
 
+local header_art = (tonumber(os.date("%m")) == 10) and require("ascii").bloody or require("ascii").sharp
 ---@type snacks.dashboard.Config
 M.dashboard = {
   enabled = true,
   preset = {
-    header = table.concat(require("ascii").sharp, "\n"),
+    header = table.concat(header_art, "\n"),
   },
 }
 
@@ -306,6 +339,12 @@ M.terminal = {
     border = "rounded",
     backdrop = false,
   },
+}
+
+---@type snacks.picker.explorer.Config
+M.explorer = {
+  enabled = true,
+  replace_netrw = true,
 }
 
 return M

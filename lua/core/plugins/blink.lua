@@ -55,25 +55,25 @@ return {
       },
       keymap = {
         preset = "enter",
-        ["<Tab>"] = {
-          function(cmp)
-            if cmp.snippet_active() then
-              return cmp.snippet_forward()
-            end
-          end,
-          "select_next",
-          "fallback",
-        },
-        ["<S-Tab>"] = {
-          "snippet_backward",
-          function(cmp)
-            if cmp.snippet_active() then
-              return cmp.snippet_backward()
-            end
-          end,
-          "select_prev",
-          "fallback",
-        },
+        -- ["<Tab>"] = {
+        --   function(cmp)
+        --     if cmp.snippet_active() then
+        --       return cmp.snippet_forward()
+        --     end
+        --   end,
+        --   "select_next",
+        --   "fallback",
+        -- },
+        -- ["<S-Tab>"] = {
+        --   "snippet_backward",
+        --   function(cmp)
+        --     if cmp.snippet_active() then
+        --       return cmp.snippet_backward()
+        --     end
+        --   end,
+        --   "select_prev",
+        --   "fallback",
+        -- },
       },
 
       appearance = {
