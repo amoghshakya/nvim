@@ -30,12 +30,6 @@ end, {
 -- or just use <C-\><C-n> to exit terminal mode
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
--- TIP: Disable arrow keys in normal mode
--- map('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- map('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- map('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- map('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
@@ -58,7 +52,7 @@ map("v", "<C-/>", "gc", { desc = "Toggle comment", remap = true })
 map("n", "<2-LeftMouse>", "gf", { noremap = true, silent = true })
 
 -- Buffers
-map("n", "<leader>n", "<Cmd>enew<CR>", { desc = "New empty buffer", silent = true })
+map("n", "<leader>n", "<Cmd>enew<CR>", { desc = "[N]ew empty buffer", silent = true })
 map("n", "<leader>x", "<Cmd>bdelete<CR>", { desc = "Close buffer", silent = true })
 
 -- Toggle numberlines
@@ -70,4 +64,4 @@ map("n", "<leader>tn", function()
     vim.wo.number = true
     vim.wo.relativenumber = true
   end
-end, { desc = "Toggle number lines", silent = true })
+end, { desc = "[T]oggle line [n]umbers", silent = true })

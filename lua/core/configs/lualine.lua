@@ -5,7 +5,8 @@ local excluded_filetypes = {
   "toggleterm",
   "snacks_dashboard",
   "snacks_picker_input",
-  "neo-tree",
+  "snacks_picker_list",
+  "snacks_layout_box",
 }
 
 local exclude = function()
@@ -19,7 +20,7 @@ M.opts = {
     component_separators = { left = "", right = "" },
     globalstatus = true, -- Show one statusline across splits (optional but nice)
     disabled_filetypes = {
-      statusline = { "alpha", "lazy", "mason" },
+      statusline = { "lazy", "mason" },
       winbar = {},
     },
   },
@@ -33,7 +34,7 @@ M.opts = {
       {
         "mode",
         icons_enabled = true,
-        icon = "",
+        icon = "",
       },
     },
     lualine_b = { "branch", "diff", "diagnostics" },
@@ -79,9 +80,9 @@ M.opts = {
     lualine_z = { "location" },
   },
   extensions = {
-    "neo-tree",
-    "lazy",
+    "quickfix",
     "fzf",
+    "toggleterm",
   },
 }
 

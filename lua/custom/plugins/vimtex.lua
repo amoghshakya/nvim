@@ -9,11 +9,26 @@ return {
     ft = { "tex", "latex", "plaintex" },
     lazy = false,
     -- Custom configuration goes here
-    init = require("custom.configs.vimtex"),
+    config = function()
+      -- vim.g.vimtex_view_method = "zathura_simple"
+
+      vim.g.vimtex_view_method = "sioyek"
+      vim.g.vimtex_view_sioyek_options = "--reuse-window"
+
+      vim.g.vimtex_compiler_method = "latexmk"
+      vim.g.vimtex_compiler_latexmk = {
+        build_dir = "out",
+        aux_dir = "out",
+        options = {
+          "-synctex=1",
+          "-shell-escape",
+        },
+      }
+    end,
   },
-  {
+  { -- This is for grammar and spell checking
     "barreiroleo/ltex_extra.nvim",
-    ft = { "tex", "latex", "markdown", "mdx" },
+    ft = { "tex", "latex" },
     dependencies = { "neovim/nvim-lspconfig" },
   },
 }

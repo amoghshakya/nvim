@@ -26,6 +26,7 @@ return {
       enabled = true,
     },
     picker = require("core.configs.snacks").picker,
+    explorer = require("core.configs.snacks").explorer,
     quickfile = {
       enabled = true,
       exclude = { "latex" },
