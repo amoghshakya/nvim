@@ -32,12 +32,7 @@ M.opts = function()
       end,
       offsets = {
         {
-          filetype = "neo-tree",
-          text = "",
-          separator = false,
-        },
-        {
-          filetype = "snacks_picker_list",
+          filetype = "snacks_layout_box",
           text = "",
           separator = true,
         },

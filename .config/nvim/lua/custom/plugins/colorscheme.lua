@@ -6,6 +6,7 @@ return {
     opts = {
       flavour = "mocha", -- latte, frappe, macchiato, mocha or auto
       default_integrations = true,
+      auto_integrations = true,
       styles = {
         misc = { "italic" },
       },
@@ -31,8 +32,8 @@ return {
         snacks = {
           enabled = true,
           indent_scope_color = "lavender",
+          picker_style = "nvchad",
         },
-        which_key = true,
       },
     },
     init = function()
