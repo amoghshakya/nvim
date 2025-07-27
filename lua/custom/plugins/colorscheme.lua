@@ -10,7 +10,6 @@ return {
       styles = {
         misc = { "italic" },
       },
-      color_overrides = {},
       integrations = {
         treesitter = true,
         treesitter_context = true,
@@ -18,11 +17,6 @@ return {
           enabled = true,
         },
         gitsigns = true,
-        blink_cmp = {
-          style = "bordered",
-        },
-        neotree = true,
-        copilot_vim = true,
         dap_ui = true,
         dropbar = {
           enabled = true,
