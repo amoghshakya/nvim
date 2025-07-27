@@ -166,6 +166,63 @@ M.keys = {
     end,
     desc = "[F]ile[t]ypes",
   },
+  {
+    "<A-`>",
+    function()
+      Snacks.terminal.toggle(nil, {
+        env = {
+          SNACKS_TERM = "horizontal",
+        },
+        interactive = true,
+        auto_close = false,
+        win = {
+          split = "below",
+          height = 0.4,
+        },
+      })
+    end,
+    desc = "Snacks: Horizontal Terminal",
+    mode = { "n", "t" },
+  },
+  {
+    "<A-v>",
+    function()
+      Snacks.terminal.toggle(nil, {
+        env = {
+          SNACKS_TERM = "vertical",
+        },
+        interactive = true,
+        auto_close = false,
+        win = {
+          position = "right",
+          split = "right",
+          width = 0.4,
+        },
+      })
+    end,
+    desc = "Snacks: Vertical Terminal",
+    mode = { "n", "t" },
+  },
+  {
+    "<A-i>",
+    function()
+      Snacks.terminal.toggle(nil, {
+        env = {
+          SNACKS_TERM = "float",
+        },
+        interactive = true,
+        auto_close = false,
+        win = {
+          position = "float",
+          border = "rounded",
+          width = 0.8,
+          height = 0.7,
+        },
+      })
+    end,
+    desc = "Snacks: Floating Terminal",
+    mode = { "n", "t" },
+  },
 }
 
 ---@type snacks.picker.Config
@@ -322,7 +379,7 @@ M.picker = {
   },
 }
 
-local header_art = (tonumber(os.date("%m")) == 10) and require("ascii").bloody or require("ascii").sharp
+local header_art = (tonumber(os.date("%m")) == 10) and require("ascii").bloody or require("ascii").dos_rebel
 ---@type snacks.dashboard.Config
 M.dashboard = {
   enabled = true,
@@ -336,7 +393,6 @@ M.terminal = {
   enabled = true,
   win = {
     style = "minimal",
-    border = "rounded",
     backdrop = false,
   },
 }

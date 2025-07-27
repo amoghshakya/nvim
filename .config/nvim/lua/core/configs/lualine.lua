@@ -7,6 +7,7 @@ local excluded_filetypes = {
   "snacks_picker_input",
   "snacks_picker_list",
   "snacks_layout_box",
+  "snacks_terminal",
 }
 
 local exclude = function()

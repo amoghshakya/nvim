@@ -55,31 +55,31 @@ return {
       },
       keymap = {
         preset = "enter",
-        -- ["<Tab>"] = {
-        --   function(cmp)
-        --     if cmp.snippet_active() then
-        --       return cmp.snippet_forward()
-        --     end
-        --   end,
-        --   "select_next",
-        --   "fallback",
-        -- },
-        -- ["<S-Tab>"] = {
-        --   "snippet_backward",
-        --   function(cmp)
-        --     if cmp.snippet_active() then
-        --       return cmp.snippet_backward()
-        --     end
-        --   end,
-        --   "select_prev",
-        --   "fallback",
-        -- },
+        ["<Tab>"] = {
+          "snippet_forward",
+          function(cmp)
+            if cmp.snippet_active() then
+              return cmp.snippet_forward()
+            end
+          end,
+          "select_next",
+          "fallback",
+        },
+        ["<S-Tab>"] = {
+          "snippet_backward",
+          function(cmp)
+            if cmp.snippet_active() then
+              return cmp.snippet_backward()
+            end
+          end,
+          "select_prev",
+          "fallback",
+        },
       },
-
       appearance = {
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned
-        nerd_font_variant = "normal",
+        nerd_font_variant = "mono",
         kind_icons = {
           Method = "",
           Keyword = "󰌋",
@@ -94,7 +94,7 @@ return {
 
       completion = {
         menu = {
-          border = "rounded",
+          border = "double",
           draw = {
             columns = {
               { "label", "label_description" },

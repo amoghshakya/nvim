@@ -37,6 +37,7 @@ return {
       enabled = true,
     },
     words = { enabled = true },
+    terminal = require("core.configs.snacks").terminal,
   },
   keys = require("core.configs.snacks").keys,
 }
