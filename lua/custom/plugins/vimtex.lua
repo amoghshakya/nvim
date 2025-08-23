@@ -6,14 +6,14 @@
 return {
   {
     "lervag/vimtex",
-    ft = { "tex", "latex", "plaintex" },
     lazy = false,
     -- Custom configuration goes here
     config = function()
-      -- vim.g.vimtex_view_method = "zathura_simple"
+      -- disable `K` as it conflicts with LSP hover
+      vim.g.vimtex_mappings_disable = { ["n"] = { "K" } }
+      vim.g.vimtex_view_method = "zathura_simple"
 
-      vim.g.vimtex_view_method = "sioyek"
-      vim.g.vimtex_view_sioyek_options = "--reuse-window"
+      vim.g.vimtex_quickfix_autoclose_after_keystrokes = 25
 
       vim.g.vimtex_compiler_method = "latexmk"
       vim.g.vimtex_compiler_latexmk = {
@@ -25,10 +25,5 @@ return {
         },
       }
     end,
-  },
-  { -- This is for grammar and spell checking
-    "barreiroleo/ltex_extra.nvim",
-    ft = { "tex", "latex" },
-    dependencies = { "neovim/nvim-lspconfig" },
   },
 }

@@ -28,6 +28,7 @@ M.keys = {
   {
     "<leader>st",
     function()
+      ---@diagnostic disable-next-line: undefined-field
       Snacks.picker.todo_comments({
         layout = {
           preset = "vertical",
@@ -162,20 +163,38 @@ M.keys = {
     "<leader>ft",
     function()
       -- This is a custom picker defined in the config below
+      ---@diagnostic disable-next-line
       Snacks.picker.filetypes()
     end,
     desc = "[F]ile[t]ypes",
   },
+  -- Terminal toggles
   {
     "<A-`>",
     function()
-      Snacks.terminal.toggle(nil, {
-        env = {
-          SNACKS_TERM = "horizontal",
-        },
+      local last = vim.g.last_horizontal_term
+      if not last then
+        local unique_env = { CREATED_AT = tostring(os.time()) }
+        vim.g.last_horizontal_term = { cmd = nil, cwd = nil, env = unique_env, count = vim.v.count1 }
+        Snacks.terminal.toggle(nil, {
+          env = unique_env,
+          interactive = true,
+          auto_close = false,
+          win = {
+            position = "bottom",
+            split = "below",
+            height = 0.4,
+          },
+        })
+        return
+      end
+      Snacks.terminal.toggle(last.cmd, {
+        env = last.env,
+        cwd = last.cwd,
         interactive = true,
         auto_close = false,
         win = {
+          position = "bottom",
           split = "below",
           height = 0.4,
         },
@@ -187,10 +206,25 @@ M.keys = {
   {
     "<A-v>",
     function()
-      Snacks.terminal.toggle(nil, {
-        env = {
-          SNACKS_TERM = "vertical",
-        },
+      local last = vim.g.last_vertical_term
+      if not last then
+        local unique_env = { CREATED_AT = tostring(os.time()) }
+        vim.g.last_vertical_term = { cmd = nil, cwd = nil, env = unique_env, count = vim.v.count1 }
+        Snacks.terminal.toggle(nil, {
+          env = unique_env,
+          interactive = true,
+          auto_close = false,
+          win = {
+            position = "right",
+            split = "right",
+            width = 0.4,
+          },
+        })
+        return
+      end
+      Snacks.terminal.toggle(last.cmd, {
+        env = last.env,
+        cwd = last.cwd,
         interactive = true,
         auto_close = false,
         win = {
@@ -222,6 +256,49 @@ M.keys = {
     end,
     desc = "Snacks: Floating Terminal",
     mode = { "n", "t" },
+  },
+  -- Terminal create
+  {
+    "<leader>nt",
+    function()
+      local unique_env = { CREATED_AT = tostring(os.time()) }
+      local term, _ = Snacks.terminal.get(nil, {
+        interactive = true,
+        auto_close = false,
+        win = {
+          position = "bottom",
+          split = "below",
+          height = 0.4,
+        },
+        env = unique_env,
+      })
+      ---@diagnostic disable-next-line: need-check-nil
+      term:show()
+      -- Store the ID info for toggle later
+      vim.g.last_horizontal_term = { cmd = nil, cwd = nil, env = unique_env, count = vim.v.count1 }
+    end,
+    desc = "[N]ew [T]erminal (Horizontal)",
+  },
+  {
+    "<leader>nv",
+    function()
+      local unique_env = { CREATED_AT = tostring(os.time()) }
+      local term, _ = Snacks.terminal.get(nil, {
+        interactive = true,
+        auto_close = false,
+        win = {
+          position = "right",
+          split = "right",
+          width = 0.4,
+        },
+        env = unique_env,
+      })
+      ---@diagnostic disable-next-line: need-check-nil
+      term:show()
+      -- Store the ID info for toggle later
+      vim.g.last_vertical_term = { cmd = nil, cwd = nil, env = unique_env, count = vim.v.count1 }
+    end,
+    desc = "[N]ew [V]ertical Terminal",
   },
 }
 
@@ -286,6 +363,8 @@ M.picker = {
         "**/.next/*",
         "**/dist/*",
         "**/build/*",
+        "**/*cache*", -- anything that has the cache in the name
+        "**/.virtual_documents",
       },
     },
     filetypes = {
@@ -310,6 +389,50 @@ M.picker = {
           }
         end
         return items
+      end,
+    },
+    terminals = {
+      name = "terminals",
+      format = "text",
+      preview = "none",
+      layout = { preset = "vscode" },
+      finder = function()
+        local terms = Snacks.terminal.list()
+        local items = {}
+
+        for _, t in ipairs(terms) do
+          local pos = t.opts and t.opts.position or "unknown"
+          local vis = t.closed and "[hidden]" or "[visible]"
+          local name = vim.api.nvim_buf_get_name(t.buf)
+          local short_name = vim.fn.fnamemodify(name, ":t")
+
+          if short_name == "" then
+            short_name = "[no name]"
+          end
+
+          table.insert(items, {
+            text = string.format(" [%d] %-8s %-9s %s", t.id or 0, pos, vis, short_name),
+            buf = t.buf,
+            win = t.win,
+            closed = t.closed,
+            value = t,
+          })
+        end
+
+        return items
+      end,
+      confirm = function(picker, item)
+        picker:close()
+        if item and item.value then
+          vim.schedule(function()
+            local term = item.value
+            if term.closed then
+              term:show()
+            else
+              term:focus()
+            end
+          end)
+        end
       end,
     },
     pickers = {
@@ -372,6 +495,7 @@ M.picker = {
             ["<C-n>"] = function()
               Snacks.explorer.open()
             end,
+            ["w"] = "explorer_cd",
           },
         },
       },
@@ -379,7 +503,7 @@ M.picker = {
   },
 }
 
-local header_art = (tonumber(os.date("%m")) == 10) and require("ascii").bloody or require("ascii").dos_rebel
+local header_art = (tonumber(os.date("%m")) == 10) and require("ascii").bloody or require("ascii").sharp
 ---@type snacks.dashboard.Config
 M.dashboard = {
   enabled = true,

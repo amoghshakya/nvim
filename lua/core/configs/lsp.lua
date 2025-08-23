@@ -1,5 +1,6 @@
 local M = {}
 
+-- Language Servers to enable
 M.servers = {
   lua_ls = {
     settings = {
@@ -9,7 +10,39 @@ M.servers = {
     },
   },
   tinymist = {
+    on_attach = function(client, bufnr)
+      vim.keymap.set("n", "<localleader>tp", function()
+        client:exec_cmd({
+          title = "pin",
+          command = "tinymist.pinMain",
+          arguments = { vim.api.nvim_buf_get_name(0) },
+        }, { bufnr = bufnr })
+      end, { desc = "[T]inymist [P]in", noremap = true })
+
+      vim.keymap.set("n", "<localleader>tu", function()
+        client:exec_cmd({
+          title = "unpin",
+          command = "tinymist.pinMain",
+          arguments = { vim.v.null },
+        }, { bufnr = bufnr })
+      end, { desc = "[T]inymist [U]npin", noremap = true })
+
+      vim.keymap.set("n", "<localleader>tw", function()
+        client:exec_cmd({
+          title = "preview",
+          command = "tinymist.startDefaultPreview",
+          arguments = { vim.api.nvim_buf_get_name(0) },
+        }, { bufnr = bufnr })
+      end, { desc = "[T]inymist [W]eb Preview", noremap = true })
+
+      vim.keymap.set("n", "<localleader>tt", "<cmd>OpenPdf<cr>", {
+        desc = "[T]inymist [T]ypst PDF",
+        noremap = true,
+        buffer = bufnr,
+      })
+    end,
     settings = {
+      formatterMode = "typstyle",
       exportPdf = "onSave",
       semanticTokens = "disable",
     },
@@ -27,7 +60,6 @@ M.servers = {
   intelephense = {
     on_attach = function(client, bufnr)
       client.server_capabilities.documentFormattingProvider = true
-      M.on_attach(client, bufnr)
     end,
     init_options = {
       storagePath = vim.fn.stdpath("cache") .. "/intelephense",
@@ -43,74 +75,84 @@ M.servers = {
       },
     },
   },
-  ltex_plus = {
-    filetypes = {
-      "bib",
-      "context",
-      "gitcommit",
-      "markdown",
-      "org",
-      "pandoc",
-      "plaintex",
-      "quarto",
-      "mail",
-      "mdx",
-      "rmd",
-      "rnoweb",
-      "rst",
-      "tex",
-      "text",
-      "typst",
-    },
-    on_attach = function(client, bufnr)
-      M.on_attach(client, bufnr)
-      require("ltex_extra").setup({
-        path = vim.fn.expand("~/.local/share/nvim/ltex/"),
-        load_langs = { "en-US" },
-        init_check = true,
-      })
-    end,
+  texlab = {
     settings = {
-      ltex = {
-        language = "en-US",
-        completionEnabled = false,
-        enabled = { "latex", "tex", "markdown", "mdx" },
-        additionalRules = {
-          enablePickyRules = true,
-          motherTongue = "en-US",
+      texlab = {
+        build = {
+          args = {
+            "-pdf",
+            "-interaction=nonstopmode",
+            "-synctex=1",
+            "-shell-escape",
+            "-emulate-aux-dir",
+            "-auxdir=out",
+            "%f",
+          },
+          onSave = false,
+          forwardSearchAfter = true,
         },
-        latex = {
-          commands = {},
+        forwardSearch = {
+          executable = "zathura",
+          args = {
+            "--synctex-forward",
+            "%l:1:%f",
+            "%p",
+          },
         },
-        diagnosticDelay = "1000ms",
+        chktex = {
+          onOpenAndSave = true,
+        },
       },
     },
   },
+  harper_ls = {
+    filetypes = { "tex", "latex", "markdown", "typst" },
+  },
 }
 
----@type vim.lsp.client.on_attach_cb
-M.on_attach = function(client, bufnr)
-  client.server_capabilities.documentFormattingProvider = false
-  client.server_capabilities.documentRangeFormattingProvider = false
-
+M.mappings = function(event)
   local map = function(keys, func, desc, mode)
-    vim.keymap.set(mode or "n", keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
+    vim.keymap.set(mode or "n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
   end
 
-  map("gd", require("snacks.picker").lsp_definitions, "[G]oto [D]efinition")
-  map("gr", require("snacks.picker").lsp_references, "[G]oto [R]eferences")
-  map("gI", require("snacks.picker").lsp_implementations, "[G]oto [I]mplementation")
-  map("<leader>D", require("snacks.picker").lsp_type_definitions, "Type [D]efinition")
-  map("<leader>ds", require("snacks.picker").lsp_symbols, "[D]ocument [S]ymbols")
-  map("<leader>ws", require("snacks.picker").lsp_workspace_symbols, "[W]orkspace [S]ymbols")
-  map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-  map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
-  map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+  map("grd", require("snacks.picker").lsp_definitions, "[G]oto [D]efinition")
+  map("grr", require("snacks.picker").lsp_references, "[G]oto [R]eferences")
+  map("gri", require("snacks.picker").lsp_implementations, "[G]oto [I]mplementation")
+  map("grt", require("snacks.picker").lsp_type_definitions, "[G]oto [T]ype Definition")
+  map("gO", require("snacks.picker").lsp_symbols, "[G]o to Document [O]bjects")
+  map("gW", require("snacks.picker").lsp_workspace_symbols, "[G]o to [W]orkspace Symbols")
+  map("grn", vim.lsp.buf.rename, "[G]oto [R]e[n]ame")
+  map("gra", vim.lsp.buf.code_action, "[G]oto [C]ode [A]ction", { "n", "x" })
+  map("grD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+
+  local client = vim.lsp.get_client_by_id(event.data.client_id)
+  if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+    local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      buffer = event.buf,
+      group = highlight_augroup,
+      callback = vim.lsp.buf.document_highlight,
+    })
+
+    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+      buffer = event.buf,
+      group = highlight_augroup,
+      callback = vim.lsp.buf.clear_references,
+    })
+
+    vim.api.nvim_create_autocmd("LspDetach", {
+      group = vim.api.nvim_create_augroup("lsp-detach", { clear = true }),
+      callback = function(event2)
+        vim.lsp.buf.clear_references()
+        vim.api.nvim_clear_autocmds({ group = "lsp-highlight", buffer = event2.buf })
+      end,
+    })
+  end
 
   -- Inlay Hints toggle
   if vim.lsp.inlay_hint then
     map("<leader>th", function()
-      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
     end, "[T]oggle Inlay [H]ints")
   end
 end
@@ -132,7 +174,13 @@ M.diagnostics = {
     source = "if_many",
     spacing = 2,
     format = function(diagnostic)
-      return diagnostic.message
+      local diagnostic_message = {
+        [vim.diagnostic.severity.ERROR] = diagnostic.message,
+        [vim.diagnostic.severity.WARN] = diagnostic.message,
+        [vim.diagnostic.severity.INFO] = diagnostic.message,
+        [vim.diagnostic.severity.HINT] = diagnostic.message,
+      }
+      return diagnostic_message[diagnostic.severity]
     end,
   },
 }

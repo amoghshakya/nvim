@@ -10,13 +10,18 @@ return {
       styles = {
         misc = { "italic" },
       },
+      color_overrides = {
+        mocha = require("custom.configs.colorscheme").gruvbox_mocha,
+      },
       integrations = {
+        blink = {
+          style = "bordered",
+        },
         treesitter = true,
         treesitter_context = true,
         native_lsp = {
           enabled = true,
         },
-        gitsigns = true,
         dap_ui = true,
         dropbar = {
           enabled = true,

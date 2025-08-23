@@ -7,6 +7,8 @@ local g = vim.g
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+o.winborder = "rounded"
+
 -- Convert tabs to spaces
 o.expandtab = true
 o.shiftwidth = 4
@@ -21,6 +23,7 @@ o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 o.mouse = "a"
+o.mousemoveevent = true
 
 -- Don't show the mode, since it's already in the status line
 o.showmode = false

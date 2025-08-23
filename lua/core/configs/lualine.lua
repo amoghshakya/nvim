@@ -17,6 +17,8 @@ end
 M.opts = {
   options = {
     theme = "auto",
+    -- section_separators = "",
+    -- component_separators = "",
     section_separators = { left = "", right = "" },
     component_separators = { left = "", right = "" },
     globalstatus = true, -- Show one statusline across splits (optional but nice)
@@ -36,6 +38,9 @@ M.opts = {
         "mode",
         icons_enabled = true,
         icon = "",
+        -- fmt = function(str)
+        --   return str:sub(1, 3)
+        -- end,
       },
     },
     lualine_b = { "branch", "diff", "diagnostics" },
@@ -46,21 +51,11 @@ M.opts = {
       },
     },
     lualine_x = {
-      {
-        "lsp_status",
-        icon = "",
-        symbols = {
-          separator = "  ",
-        },
-      },
-      {
-        "filetype",
-        cond = exclude,
-      },
+      "lsp_status",
     },
     lualine_y = {
       {
-        "progress",
+        "filetype",
         cond = exclude,
       },
     },
@@ -82,8 +77,8 @@ M.opts = {
   },
   extensions = {
     "quickfix",
-    "fzf",
     "toggleterm",
+    "nvim-dap-ui",
   },
 }
 
