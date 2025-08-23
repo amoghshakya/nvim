@@ -10,31 +10,6 @@ map("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- Diagnostic keymaps
 map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
--- Rounded borders for LSP Hovers
-vim.keymap.set("n", "K", function()
-  vim.lsp.buf.hover({
-    border = "rounded",
-    focusable = false,
-  })
-end, {
-  desc = "Show hover information",
-  remap = true,
-  silent = true,
-})
-
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
-vim.api.nvim_create_autocmd("TermOpen", {
-  pattern = "*",
-  callback = function()
-    map("t", "<Esc><Esc>", [[<C-\><C-n>]], { buffer = true, desc = "Exit terminal mode" })
-  end,
-})
-
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
@@ -54,11 +29,33 @@ map("n", "<C-/>", "gcc", { desc = "Toggle comment", remap = true })
 map("v", "<C-/>", "gc", { desc = "Toggle comment", remap = true })
 
 -- Weird stuff
-map("n", "<2-LeftMouse>", "gf", { noremap = true, silent = true })
+map("n", "<2-LeftMouse>", "<C-]>", { noremap = true, silent = true })
 
 -- Buffers
-map("n", "<leader>n", "<Cmd>enew<CR>", { desc = "[N]ew empty buffer", silent = true })
-map("n", "<leader>x", "<Cmd>bdelete<CR>", { desc = "Close buffer", silent = true })
+map("n", "<Tab>", "<Cmd>bnext<CR>", { desc = "Next buffer", silent = true })
+map("n", "<S-Tab>", "<Cmd>bNext<CR>", { desc = "Next buffer", silent = true })
+map("n", "<leader>nn", "<Cmd>enew<CR>", { desc = "[N]ew empty buffer", silent = true })
+map("n", "<leader>x", function()
+  -- Closes the buffer without affecting the split layout
+  require("snacks.bufdelete").delete()
+
+  -- If the buffer is the last one, close the split as well.
+  -- This feels more natural to me than closing the split first.
+  vim.schedule(function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    -- Count listed buffers
+    local listed = vim.tbl_filter(function(b)
+      return vim.bo[b].buflisted
+    end, vim.api.nvim_list_bufs())
+
+    if #listed <= 1 then
+      if #vim.fn.win_findbuf(bufnr) > 1 then
+        -- If more than one window, safe to close
+        vim.cmd("close")
+      end
+    end
+  end)
+end, { desc = "Close buffer", silent = true })
 
 -- Toggle numberlines
 map("n", "<leader>tn", function()
