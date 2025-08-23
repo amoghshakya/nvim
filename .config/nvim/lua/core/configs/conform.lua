@@ -16,14 +16,14 @@ local opts = {
     astro = { "prettier", "prettierd", stop_after_first = true },
     json = { "prettier" },
     jsonc = { "prettier" },
-    python = { "autopep8", "isort" },
+    python = { "ruff_format" },
     c = { "clang-format" },
     cpp = { "clang-format" },
     rust = { "rustfmt" },
     tex = { "latexindent" },
     plaintex = { "latexindent" },
     bib = { "bibtex-tidy" },
-    typst = { "prettypst" },
+    -- typst = { "prettypst" },
     markdown = { "markdownlint", "prettier" },
     htmldjango = { "djlint" },
     sql = { "sql_formatter" },
@@ -37,15 +37,6 @@ local opts = {
         "-m",
         "-g=/dev/null",
       },
-    },
-    php_cs_fixer = {
-      env = {
-        PHP_CS_FIXER_IGNORE_ENV = "1",
-      },
-    },
-    qmlformat = {
-      command = "qmlformat",
-      args = { "", "$FILENAME" },
     },
     ["blade-formatter"] = {
       command = "blade-formatter",

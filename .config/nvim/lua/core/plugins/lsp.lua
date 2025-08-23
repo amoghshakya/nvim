@@ -1,37 +1,9 @@
 -- LSP Plugins
 
 return {
-  {
-    -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-    -- used for completion, annotations and signatures of Neovim apis
-    "folke/lazydev.nvim",
-    ft = "lua",
-    opts = {
-      library = {
-        -- Load luvit types when the `vim.uv` word is found
-        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-        { path = "snacks.nvim", words = { "Snacks" } },
-      },
-    },
-  },
-  { -- `pmizio/typescript-tools.nvim` provides TypeScript and JavaScript LSP support
-    -- with additional features like code actions, formatting, and more
-    "pmizio/typescript-tools.nvim",
-    ft = {
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-      "javascript",
-      "javascriptreact",
-      "javascript.jsx",
-      "astro",
-    },
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    opts = {},
-  },
-  {
+  { -- Core LSP setup
     "neovim/nvim-lspconfig",
-    event = { "VeryLazy", "BufReadPre", "BufNewFile" },
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       {
         "mason-org/mason.nvim",
@@ -47,7 +19,6 @@ return {
         },
       },
       "mason-org/mason-lspconfig.nvim",
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
       {
         "j-hui/fidget.nvim",
         event = "LspAttach",
@@ -61,66 +32,64 @@ return {
       },
     },
     config = function()
-      local lsp_attach = require("core.configs.lsp").on_attach
-      -- local capabilities = require("core.configs.lsp").capabilities
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = require("core.configs.lsp").mappings,
+      })
+      vim.diagnostic.config(require("core.configs.lsp").diagnostics)
 
-      local mason_registry = require("mason-registry")
-
-      -- LSP servers
-      local servers = require("core.configs.lsp").servers
-
+      local servers = require("core.configs.lsp").servers or {}
       local ensure_installed = {}
 
-      local mlsp = require("mason-lspconfig")
-      local lspconfig_to_package = mlsp.get_mappings().lspconfig_to_package
-
-      -- Install LSP servers if not already installed
-      -- This is a workaround to ensure that servers that are already installed
-      -- are not reinstalled by mason
+      -- Sometimes Mason will install the LSP servers automatically,
+      -- even the ones that are already present on the system.
+      -- I could disable automatic installation, but I prefer to keep it enabled.
+      local mason_mapping = require("mason-lspconfig.mappings").get_all().lspconfig_to_package
       for server, _ in pairs(servers) do
-        local mason_name = lspconfig_to_package[server]
-        if mason_name then
-          local ok, pkg = pcall(mason_registry.get_package, mason_name)
-          if ok then
-            local found = false
-            for bin, _ in pairs(pkg.spec.bin or {}) do
-              if vim.fn.executable(bin) == 1 then
-                found = true
-                break
-              end
-            end
-
-            if not found then
-              table.insert(ensure_installed, server)
-            end
-          else
-            -- Not in mason registry, still ensure installed (local servers)
-            table.insert(ensure_installed, server)
-          end
+        local pkg = mason_mapping[server]
+        if vim.fn.executable(pkg) == 0 then
+          table.insert(ensure_installed, server)
         end
       end
 
-      vim.list_extend(ensure_installed, {
-        "stylua", -- for lua formatting
-      })
-
-      require("mason-tool-installer").setup({ ensure_installed = ensure_installed, auto_update = true })
-
       require("mason-lspconfig").setup({
-        ensure_installed = {},
-        automatic_installation = false,
-        automatic_enable = true,
+        automatic_enable = ensure_installed,
+        ensure_installed = ensure_installed,
       })
 
+      -- Overriding default LSP config with the ones specified in `servers`
       for server, config in pairs(servers) do
-        -- config.capabilities = vim.tbl_deep_extend("force", {}, capabilities, config.capabilities or {})
-        config.on_attach = config.on_attach or lsp_attach
         vim.lsp.config(server, config)
         vim.lsp.enable(server)
       end
-
-      vim.diagnostic.config(require("core.configs.lsp").diagnostics)
     end,
+  },
+  { -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
+    -- used for completion, annotations and signatures of Neovim apis
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        { path = "snacks.nvim", words = { "Snacks" } },
+      },
+    },
+  },
+  { -- `pmizio/typescript-tools.nvim` provides TypeScript and JavaScript LSP support
+    -- with additional features like code actions, formatting, and more
+    -- better than tsls
+    "pmizio/typescript-tools.nvim",
+    ft = {
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
+      "astro",
+    },
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    opts = {},
   },
   {
     "Bekaboo/dropbar.nvim",

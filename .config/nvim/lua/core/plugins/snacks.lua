@@ -9,15 +9,22 @@ return {
   lazy = false,
   ---@type snacks.Config
   opts = {
+    animate = {
+      easing = "outCubic",
+    },
     bigfile = { enabled = true },
+    bufdelete = { enabled = true },
     dashboard = require("core.configs.snacks").dashboard,
+    explorer = require("core.configs.snacks").explorer,
     indent = {
       enabled = true,
-      animation = {
-        easing = "cubic-in-out",
+    },
+    image = {
+      enabled = true,
+      math = {
+        enabled = true,
       },
     },
-    image = { enabled = false },
     input = { enabled = true },
     lazygit = {
       enabled = true,
@@ -26,18 +33,18 @@ return {
       enabled = true,
     },
     picker = require("core.configs.snacks").picker,
-    explorer = require("core.configs.snacks").explorer,
     quickfile = {
       enabled = true,
       exclude = { "latex" },
     },
+    rename = { enabled = true },
     scope = { enabled = true },
-    statuscolumn = { enabled = true },
-    toggle = {
+    statuscolumn = {
       enabled = true,
     },
-    words = { enabled = true },
     terminal = require("core.configs.snacks").terminal,
+    toggle = { which_key = true },
+    words = { enabled = true },
   },
   keys = require("core.configs.snacks").keys,
 }

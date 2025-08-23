@@ -9,11 +9,14 @@ return {
     "nvim-neotest/nvim-nio",
 
     -- Installs the debug adapters for you
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     "jay-babu/mason-nvim-dap.nvim",
 
-    -- Add your own debuggers here
-    "leoluz/nvim-dap-go",
+    -- Python debugging support
+    {
+      "mfussenegger/nvim-dap-python",
+      ft = "python",
+    },
   },
   keys = require("core.configs.debug").keys,
   config = require("core.configs.debug").config,

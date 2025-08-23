@@ -19,7 +19,6 @@ return {
     version = "*",
     -- optional: provides snippets for the snippet source
     dependencies = {
-      { "micangl/cmp-vimtex" },
       {
         "L3MON4D3/LuaSnip",
         event = { "InsertEnter" },
@@ -94,11 +93,18 @@ return {
 
       completion = {
         menu = {
-          border = "double",
           draw = {
+            padding = { 0, 1 },
+            components = {
+              kind_icon = {
+                text = function(ctx)
+                  return " " .. ctx.kind_icon .. ctx.icon_gap .. " "
+                end,
+              },
+            },
             columns = {
-              { "label", "label_description" },
-              { "kind_icon", "kind", gap = 1 },
+              { "kind_icon" },
+              { "label", "kind", gap = 8 },
             },
             treesitter = { "lsp" },
           },
@@ -111,9 +117,6 @@ return {
           -- Show documentation beside the completion menu
           -- Really helpful for seeing what you're completing
           auto_show = true,
-          window = {
-            border = "rounded",
-          },
         },
         list = {
           selection = {
@@ -137,8 +140,6 @@ return {
         default = { "lsp", "path", "snippets" },
         per_filetype = {
           lua = { "lsp", "path", "snippets", "lazydev" },
-          tex = { "lsp", "path", "snippets", "vimtex" },
-          bibtex = { "lsp", "path", "snippets", "vimtex" },
         },
         providers = {
           lsp = {
@@ -151,19 +152,11 @@ return {
             module = "lazydev.integrations.blink",
             score_offset = 100,
           },
-          vimtex = {
-            name = "vimtex",
-            module = "blink.compat.source",
-            score_offset = 100,
-          },
         },
       },
 
       signature = {
         enabled = true,
-        window = {
-          border = "rounded",
-        },
       },
 
       fuzzy = {
