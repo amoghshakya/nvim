@@ -9,13 +9,6 @@ M.keys = {
     end,
     desc = "Toggle Explorer",
   },
-  {
-    "<leader>e",
-    function()
-      Snacks.explorer.reveal()
-    end,
-    desc = "Focus [E]xplorer",
-  },
   -- Lazygit
   {
     "<leader>lg",
@@ -259,7 +252,7 @@ M.keys = {
   },
   -- Terminal create
   {
-    "<leader>nt",
+    "<leader>nh",
     function()
       local unique_env = { CREATED_AT = tostring(os.time()) }
       local term, _ = Snacks.terminal.get(nil, {
@@ -277,7 +270,7 @@ M.keys = {
       -- Store the ID info for toggle later
       vim.g.last_horizontal_term = { cmd = nil, cwd = nil, env = unique_env, count = vim.v.count1 }
     end,
-    desc = "[N]ew [T]erminal (Horizontal)",
+    desc = "[N]ew [H]orizontal Terminal",
   },
   {
     "<leader>nv",
@@ -514,7 +507,6 @@ M.dashboard = {
 
 ---@type snacks.terminal.Config
 M.terminal = {
-  enabled = true,
   win = {
     style = "minimal",
     backdrop = false,

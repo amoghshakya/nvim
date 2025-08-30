@@ -57,13 +57,6 @@ map("n", "<leader>x", function()
   end)
 end, { desc = "Close buffer", silent = true })
 
--- Toggle numberlines
-map("n", "<leader>tn", function()
-  if vim.wo.number then
-    vim.wo.number = false
-    vim.wo.relativenumber = false
-  else
-    vim.wo.number = true
-    vim.wo.relativenumber = true
-  end
-end, { desc = "[T]oggle line [n]umbers", silent = true })
+-- Tabs
+map("n", "<leader>ct", "<Cmd>tabclose<CR>", { desc = "[C]lose [T]ab", silent = true })
+map("n", "<leader>nt", "<Cmd>tabnew<CR>", { desc = "[N]ew [T]ab", silent = true })

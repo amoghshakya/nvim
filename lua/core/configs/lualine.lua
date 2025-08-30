@@ -2,7 +2,6 @@ local M = {}
 
 local excluded_filetypes = {
   "TelescopePrompt",
-  "toggleterm",
   "snacks_dashboard",
   "snacks_picker_input",
   "snacks_picker_list",
@@ -77,7 +76,6 @@ M.opts = {
   },
   extensions = {
     "quickfix",
-    "toggleterm",
     "nvim-dap-ui",
   },
 }

@@ -7,6 +7,7 @@ return {
     dependencies = {
       {
         "mason-org/mason.nvim",
+        cmd = "Mason",
         opts = {
           path = "skip",
           ui = {

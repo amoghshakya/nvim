@@ -14,9 +14,7 @@ return {
         mocha = require("custom.configs.colorscheme").gruvbox_mocha,
       },
       integrations = {
-        blink = {
-          style = "bordered",
-        },
+        gitsigns = true,
         treesitter = true,
         treesitter_context = true,
         native_lsp = {

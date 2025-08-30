@@ -23,7 +23,7 @@ return {
       {
         "<leader>fm",
         function()
-          require("conform").format({ async = true, lsp_format = "fallback" })
+          require("conform").format()
         end,
         mode = "",
         desc = "[F]or[m]at buffer",
@@ -38,20 +38,8 @@ return {
     opts = { signs = false },
   },
   {
-    -- Allows you to add, change, and delete surrounding pairs
-    -- motions like `cs"'` or `ds"` to change or delete surrounding quotes
-    -- `ysiw"` to add surrounding quotes
-    -- Also supports HTML tags, and other pairs
-    -- https://github.com/kylechui/nvim-surround
     "kylechui/nvim-surround",
-    event = "VeryLazy",
-    opts = {},
-  },
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    -- Optional dependency
-    dependencies = { "saghen/blink.cmp" },
+    keys = { "ys", "ds", "cs" },
     opts = {},
   },
   { -- Fast status line

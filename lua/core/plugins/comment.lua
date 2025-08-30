@@ -1,10 +1,3 @@
---[[
--- https://github.com/numToStr/Comment.nvim
--- Really neat plugin for commenting out code.
--- For a minimal setup, the built-in commentstring command can be enough.
--- But this plugin is great for more complex commenting needs.
---]]
-
 return {
   "numToStr/Comment.nvim",
   event = { "BufReadPost", "BufNewFile" },
