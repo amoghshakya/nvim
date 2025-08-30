@@ -5,7 +5,7 @@ M.opts = function()
     options = {
       themable = true,
       show_buffer_icons = true,
-      show_buffer_close_icons = true,
+      show_buffer_close_icons = false,
       show_close_icon = true,
       show_tab_indicators = true,
       enforce_regular_tabs = false,
@@ -33,7 +33,7 @@ M.opts = function()
         return vim.trim(ret)
       end,
       custom_filter = function(buf, _)
-        local exclude = { "toggleterm", "quickfix", "nofile" }
+        local exclude = { "quickfix", "nofile" }
         local buftype = vim.bo[buf].buftype
 
         return not vim.tbl_contains(exclude, buftype)
@@ -43,11 +43,6 @@ M.opts = function()
           filetype = "snacks_layout_box",
           text = "",
           separator = true,
-        },
-        {
-          filetype = "toggleterm",
-          text = "",
-          separator = false,
         },
         {
           filetype = "help",
@@ -74,7 +69,7 @@ M.opts = function()
 end
 
 M.keys = {
-  { "<leader>bc", "<CMD>BufferLinePick<CR>", desc = "Pick buffer", silent = true },
+  { "<leader>pb", "<CMD>BufferLinePick<CR>", desc = "[P]ick [B]uffer", silent = true },
 }
 
 return M

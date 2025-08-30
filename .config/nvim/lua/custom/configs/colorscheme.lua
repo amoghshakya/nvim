@@ -12,7 +12,7 @@ M.gruvbox_mocha = {
   mantle = "#1a1a1a",
   crust = "#0f0f0f",
   surface0 = "#2a2a2a",
-  surface1 = "#333333",
+  surface1 = "#444444",
 }
 
 return M

@@ -150,11 +150,12 @@ M.mappings = function(event)
   end
 
   -- Inlay Hints toggle
-  if vim.lsp.inlay_hint then
-    map("<leader>th", function()
-      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-    end, "[T]oggle Inlay [H]ints")
-  end
+  -- This is handled by snacks so commenting out for now
+  -- if vim.lsp.inlay_hint then
+  --   map("<leader>th", function()
+  --     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+  --   end, "[T]oggle Inlay [H]ints")
+  -- end
 end
 
 ---@type vim.diagnostic.Opts

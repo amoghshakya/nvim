@@ -1,8 +1,9 @@
 local opts = {
   default_format_opts = {
-    timeout_ms = 3000,
-    async = false,
+    -- These options will be passed to conform.format()
+    async = true,
     quiet = false,
+    lsp_format = "fallback",
   },
   formatters_by_ft = {
     lua = { "stylua" },
@@ -45,9 +46,8 @@ local opts = {
     },
   },
   format_on_save = {
-    -- These options will be passed to conform.format()
-    timeout_ms = 1000,
-    lsp_format = true,
+    timeout_ms = 500,
+    lsp_format = "fallback",
   },
 }
 

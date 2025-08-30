@@ -85,7 +85,7 @@ vim.o.foldenable = true
 -- See `:help 'confirm'`
 o.confirm = true
 
-opt.fillchars:append({ eob = " " })
+opt.fillchars:append({ eob = " ", diff = "╱" })
 
 o.termguicolors = true
 o.cursorlineopt = "both"
