@@ -16,7 +16,6 @@ return {
     ignored_filetypes = {
       "neo-tree",
       "qf",
-      "toggleterm",
     },
   },
   keys = {
