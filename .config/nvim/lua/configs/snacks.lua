@@ -241,7 +241,8 @@ M.keys = {
         auto_close = false,
         win = {
           position = "float",
-          border = "rounded",
+          ---@diagnostic disable-next-line
+          border = vim.o.winborder,
           width = 0.8,
           height = 0.7,
         },
@@ -303,7 +304,15 @@ M.picker = {
     cycle = false,
   },
   matcher = {
+    fuzzy = true,
+    smartcase = true,
+    ignorecase = true,
     frecency = true,
+  },
+  formatters = {
+    file = {
+      filename_first = true,
+    },
   },
   layouts = {
     default = {
@@ -358,6 +367,7 @@ M.picker = {
         "**/build/*",
         "**/*cache*", -- anything that has the cache in the name
         "**/.virtual_documents",
+        ".venv/**/*",
       },
     },
     filetypes = {
@@ -516,7 +526,7 @@ M.terminal = {
 ---@type snacks.picker.explorer.Config
 M.explorer = {
   enabled = true,
-  replace_netrw = true,
+  replace_netrw = false,
 }
 
 return M

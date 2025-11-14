@@ -18,6 +18,6 @@ return {
       ft = "python",
     },
   },
-  keys = require("core.configs.debug").keys,
-  config = require("core.configs.debug").config,
+  keys = require("configs.debug").keys,
+  config = require("configs.debug").config,
 }

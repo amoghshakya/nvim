@@ -7,17 +7,8 @@ return { -- Highlight, edit, and navigate code
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     config = function()
       local parsers = {
-        "bash",
-        "c",
-        "diff",
-        "html",
         "lua",
-        "luadoc",
         "markdown",
-        "markdown_inline",
-        "query",
-        "vim",
-        "vimdoc",
         "python",
         "javascript",
         "typescript",

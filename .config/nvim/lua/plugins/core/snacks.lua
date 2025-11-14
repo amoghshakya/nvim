@@ -15,8 +15,8 @@ return {
     },
     bigfile = { enabled = true },
     bufdelete = { enabled = true },
-    dashboard = require("core.configs.snacks").dashboard,
-    explorer = require("core.configs.snacks").explorer,
+    -- dashboard = require("configs.snacks").dashboard,
+    explorer = require("configs.snacks").explorer,
     indent = {
       enabled = true,
     },
@@ -34,7 +34,7 @@ return {
     notifier = {
       enabled = true,
     },
-    picker = require("core.configs.snacks").picker,
+    picker = require("configs.snacks").picker,
     quickfile = {
       enabled = true,
       exclude = { "latex" },
@@ -44,10 +44,10 @@ return {
     statuscolumn = {
       enabled = true,
     },
-    terminal = require("core.configs.snacks").terminal,
+    terminal = require("configs.snacks").terminal,
     words = { enabled = true },
   },
-  keys = require("core.configs.snacks").keys,
+  keys = require("configs.snacks").keys,
   init = function()
     -- Override icon function to not use mini-icons
     -- Apparently, snacks uses mini-icons even if not enabled

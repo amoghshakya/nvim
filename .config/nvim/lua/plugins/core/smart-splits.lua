@@ -5,7 +5,7 @@
 
 return {
   "mrjones2014/smart-splits.nvim",
-  event = "VeryLazy",
+  event = { "WinEnter", "VeryLazy" },
   opts = {
     ignored_buftypes = {
       "nofile",

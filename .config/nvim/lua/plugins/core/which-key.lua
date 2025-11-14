@@ -3,7 +3,7 @@ return { -- Useful plugin to show you pending keybinds.
   event = "VeryLazy", -- Sets the loading event to 'VimEnter'
   opts = {
     win = {
-      border = "rounded",
+      border = vim.o.winborder,
     },
     -- delay between pressing a key and opening which-key (milliseconds)
     -- this setting is independent of vim.opt.timeoutlen
@@ -47,9 +47,10 @@ return { -- Useful plugin to show you pending keybinds.
 
     -- Document existing key chains
     spec = {
+      { "<leader>a", group = "[A]gent" },
+      { "<leader>f", group = "[F]ile" },
       { "<leader>d", group = "[D]ocument" },
       { "<leader>s", group = "[S]earch" },
-      { "<leader>w", group = "[W]orkspace" },
       { "<leader>t", group = "[T]oggle" },
       { "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
       { "<leader>n", group = "[N]ew" },

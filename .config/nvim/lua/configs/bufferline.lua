@@ -1,16 +1,20 @@
 local M = {}
 
 M.opts = function()
+  local bufferline = require("bufferline")
   return {
     options = {
+      style_preset = {
+        bufferline.style_preset.no_italic,
+        bufferline.style_preset.minimal,
+      },
       themable = true,
       show_buffer_icons = true,
-      show_buffer_close_icons = false,
+      show_buffer_close_icons = true,
       show_close_icon = true,
       show_tab_indicators = true,
-      enforce_regular_tabs = false,
+      enforce_regular_tabs = false, -- setting it true makes all tabs the same width
       persist_buffer_sort = true,
-      -- separator_style = { "", "" },
       separator_style = "thin",
       always_show_bufferline = true,
       color_icons = true,
@@ -23,10 +27,10 @@ M.opts = function()
       diagnostics = "nvim_lsp", -- show LSP diagnostics in tab
       diagnostics_indicator = function(_, _, diag)
         local icons = {
-          Error = " ",
-          Warn = " ",
-          Hint = " ",
-          Info = " ",
+          Error = "󰅚 ",
+          Warn = "󰀪 ",
+          Info = "󰋽 ",
+          Hint = "󰌶 ",
         }
         local ret = (diag.error and icons.Error .. diag.error .. " " or "")
           .. (diag.warning and icons.Warn .. diag.warning or "")
@@ -69,7 +73,7 @@ M.opts = function()
 end
 
 M.keys = {
-  { "<leader>pb", "<CMD>BufferLinePick<CR>", desc = "[P]ick [B]uffer", silent = true },
+  { "<leader>j", "<CMD>BufferLinePick<CR>", desc = "[J]ump to buffer", silent = true },
 }
 
 return M

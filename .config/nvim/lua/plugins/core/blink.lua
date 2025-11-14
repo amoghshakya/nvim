@@ -45,21 +45,21 @@ return {
     keymap = {
       preset = "enter",
       ["<Tab>"] = {
-        "snippet_forward",
         function(cmp)
           if cmp.snippet_active() then
             return cmp.snippet_forward()
           end
+          return nil
         end,
         "select_next",
         "fallback",
       },
       ["<S-Tab>"] = {
-        "snippet_backward",
         function(cmp)
           if cmp.snippet_active() then
             return cmp.snippet_backward()
           end
+          return nil
         end,
         "select_prev",
         "fallback",
@@ -122,6 +122,10 @@ return {
         -- Add brackets (if it's a function or method) on accepting completion
         auto_brackets = {
           enabled = true,
+          kind_resolution = {
+            enabled = true,
+            blocked_filetypes = { "typescriptreact", "javascriptreact", "vue", "tex" },
+          },
         },
       },
     },
@@ -151,7 +155,9 @@ return {
 
     fuzzy = {
       implementation = "prefer_rust",
-      use_frecency = true,
+      frecency = {
+        enabled = true,
+      },
     },
 
     -- Disable blink for commandline
