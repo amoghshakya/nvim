@@ -1,0 +1,9 @@
+-- Fast status line
+return {
+  {
+    "nvim-lualine/lualine.nvim",
+    event = { "VeryLazy" },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = require("configs.lualine").opts,
+  },
+}

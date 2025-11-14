@@ -34,17 +34,20 @@ return {
     },
     config = function()
       vim.api.nvim_create_autocmd("LspAttach", {
-        callback = require("core.configs.lsp").mappings,
+        callback = require("configs.lsp").mappings,
       })
-      vim.diagnostic.config(require("core.configs.lsp").diagnostics)
+      vim.diagnostic.config(require("configs.lsp").diagnostics)
 
-      local servers = require("core.configs.lsp").servers or {}
+      local servers = require("configs.lsp").servers or {}
       local ensure_installed = {}
 
-      -- Sometimes Mason will install the LSP servers automatically,
-      -- even the ones that are already present on the system.
-      -- I could disable automatic installation, but I prefer to keep it enabled.
+      -- Sometimes Mason will install the LSP servers automatically, even the
+      -- ones that are already present on the system. I could disable automatic
+      -- installation, but I prefer to keep it enabled.
       local mason_mapping = require("mason-lspconfig.mappings").get_all().lspconfig_to_package
+
+      -- Instead only ensure installation of binaries that are not already in
+      -- the system
       for server, _ in pairs(servers) do
         local pkg = mason_mapping[server]
         if vim.fn.executable(pkg) == 0 then
@@ -76,9 +79,7 @@ return {
       },
     },
   },
-  { -- `pmizio/typescript-tools.nvim` provides TypeScript and JavaScript LSP support
-    -- with additional features like code actions, formatting, and more
-    -- better than tsls
+  {
     "pmizio/typescript-tools.nvim",
     ft = {
       "typescript",
@@ -94,29 +95,11 @@ return {
   },
   {
     "Bekaboo/dropbar.nvim",
-    event = { "LspAttach" },
-    keys = {
-      {
-        "<Leader>;",
-        function()
-          require("dropbar.api").pick()
-        end,
-        desc = "Pick symbols in winbar",
-      },
-      {
-        "[;",
-        function()
-          require("dropbar.api").goto_context_start()
-        end,
-        desc = "Go to start of current context",
-      },
-      {
-        "];",
-        function()
-          require("dropbar.api").select_next_context()
-        end,
-        desc = "Select next context",
-      },
-    },
+    config = function()
+      local dropbar_api = require("dropbar.api")
+      vim.keymap.set("n", "<Leader>;", dropbar_api.pick, { desc = "Pick symbols in winbar" })
+      vim.keymap.set("n", "[;", dropbar_api.goto_context_start, { desc = "Go to start of current context" })
+      vim.keymap.set("n", "];", dropbar_api.select_next_context, { desc = "Select next context" })
+    end,
   },
 }

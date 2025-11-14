@@ -64,7 +64,6 @@ M.servers = {
     init_options = {
       storagePath = vim.fn.stdpath("cache") .. "/intelephense",
       globalStoragePath = vim.fn.stdpath("data") .. "/intelephense",
-      licenceKey = nil,
       clearCache = false,
     },
     settings = {
@@ -108,6 +107,7 @@ M.servers = {
   harper_ls = {
     filetypes = { "tex", "latex", "markdown", "typst" },
   },
+  qmlls = {},
 }
 
 M.mappings = function(event)
@@ -161,7 +161,7 @@ end
 ---@type vim.diagnostic.Opts
 M.diagnostics = {
   severity_sort = true,
-  float = { border = "rounded", source = "if_many" },
+  float = { source = "if_many" },
   underline = { severity = vim.diagnostic.severity.ERROR },
   signs = vim.g.have_nerd_font and {
     text = {

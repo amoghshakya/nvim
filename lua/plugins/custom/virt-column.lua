@@ -6,7 +6,7 @@
 return {
   "lukas-reineke/virt-column.nvim",
   event = "BufReadPost",
-  ft = { "python", "lua", "tex" },
+  ft = { "python", "lua", "tex", "typst" },
   opts = {
     char = "│",
     virtcolumn = "",

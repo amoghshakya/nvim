@@ -7,7 +7,7 @@ local g = vim.g
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
-o.winborder = "rounded"
+o.winborder = "single"
 
 -- Convert tabs to spaces
 o.expandtab = true
@@ -85,6 +85,9 @@ vim.o.foldenable = true
 -- See `:help 'confirm'`
 o.confirm = true
 
+-- Autoread files when changed outside of Neovim
+o.autoread = true
+
 opt.fillchars:append({ eob = " ", diff = "╱" })
 
 o.termguicolors = true
@@ -92,6 +95,9 @@ o.cursorlineopt = "both"
 
 opt.path:append("**")
 opt.isfname:append(":")
+
+-- Disable nvim intro
+opt.shortmess:append("I")
 
 -- Neovide settings
 if g.neovide then

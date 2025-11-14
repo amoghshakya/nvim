@@ -3,7 +3,8 @@ return {
   ---@module 'oil'
   ---@type oil.SetupOpts
   dependencies = { "nvim-tree/nvim-web-devicons" },
-  lazy = false,
+  cmd = "Oil",
+  event = "VimEnter", -- want it to show when i run `nvim .`
   opts = {
     view_options = {
       show_hidden = true,

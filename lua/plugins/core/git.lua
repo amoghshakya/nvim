@@ -2,10 +2,29 @@ return {
   {
     "tpope/vim-fugitive",
     event = "VeryLazy",
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "fugitive",
+        callback = function()
+          -- Close Git fugitive with `q`
+          vim.keymap.set("n", "q", "<cmd>q<CR>", {
+            buffer = true,
+            silent = true,
+            desc = "Close fugitive",
+          })
+          -- Make <leader>x behave the same way
+          vim.keymap.set("n", "<leader>x", "<cmd>q<CR>", {
+            buffer = true,
+            silent = true,
+            desc = "Close fugitive",
+          })
+        end,
+      })
+    end,
   },
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     "lewis6991/gitsigns.nvim",
-    event = { "BufReadPre", "VeryLazy" },
+    event = { "BufReadPost" },
     opts = {
       signs = {
         add = { text = "│" },
@@ -49,13 +68,12 @@ return {
       max_file_length = 40000, -- Disable if file is longer than this (in lines)
       preview_config = {
         -- Options passed to nvim_open_win
-        border = "rounded",
         style = "minimal",
         relative = "cursor",
         row = 0,
         col = 1,
       },
-      on_attach = require("core.configs.gitsigns").on_attach,
+      on_attach = require("configs.gitsigns").on_attach,
     },
   },
 }

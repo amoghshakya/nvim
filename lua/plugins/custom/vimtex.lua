@@ -25,5 +25,16 @@ return {
         },
       }
     end,
+    init = function()
+      -- Snacks Integration
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "tex",
+        callback = function()
+          vim.keymap.set("n", "<localleader>lT", function()
+            return require("vimtex.snacks").toc()
+          end, { desc = "Vimtex: TOC (Snacks)", buffer = true })
+        end,
+      })
+    end,
   },
 }

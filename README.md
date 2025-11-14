@@ -19,6 +19,32 @@ Run `:checkhealth` to check for any missing dependencies or issues.
 - unzip
 - zoxide (optional)
 
+## Structure
+
+```sh
+.
+├── after
+│   └── ftplugin
+│       └── filetype.lua    # filetype based config
+├── lua
+│   ├── configs
+│   │   └── ...             # configfiles
+│   ├── plugins
+│   │   ├── core
+│   │   │   └── ...         # core plugins
+│   │   └── custom
+│   │       └── ...         # custom plugins
+│   ├── ascii.lua
+│   ├── autocmds.lua
+│   ├── mappings.lua        # keymaps
+│   ├── neovide.lua         # neovide settings here
+│   └── options.lua         # vim options
+├── init.lua
+├── lazy-lock.json
+├── LICENSE.md
+└── README.md
+```
+
 ## Links
 
 - [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim)
