@@ -2,18 +2,28 @@ return {
   {
     "catppuccin/nvim",
     name = "catppuccin",
+    lazy = false,
     priority = 1000, -- Ensure it loads first
     opts = {
       flavour = "mocha", -- latte, frappe, macchiato, mocha or auto
       default_integrations = true,
       auto_integrations = true,
-      styles = {
-        misc = { "italic" },
-      },
       color_overrides = {
-        mocha = require("custom.configs.colorscheme").gruvbox_mocha,
+        mocha = require("configs.colorscheme").rosepine.dark,
+      },
+      custom_highlights = function(colors)
+        return {
+          lualine_c_normal = {
+            bg = colors.base,
+            fg = colors.text,
+          },
+        }
+      end,
+      styles = {
+        miscs = {},
       },
       integrations = {
+        flash = true,
         gitsigns = true,
         treesitter = true,
         treesitter_context = true,
@@ -29,12 +39,18 @@ return {
         snacks = {
           enabled = true,
           indent_scope_color = "lavender",
-          picker_style = "nvchad",
         },
       },
     },
-    init = function()
+    config = function(_, opts)
+      require("catppuccin").setup(opts)
       vim.cmd.colorscheme("catppuccin")
     end,
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
   },
 }

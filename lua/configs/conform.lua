@@ -1,9 +1,10 @@
+---@type conform.setupOpts
 local opts = {
   default_format_opts = {
     -- These options will be passed to conform.format()
     async = true,
     quiet = false,
-    lsp_format = "fallback",
+    lsp_format = "never",
   },
   formatters_by_ft = {
     lua = { "stylua" },
@@ -21,7 +22,11 @@ local opts = {
     c = { "clang-format" },
     cpp = { "clang-format" },
     rust = { "rustfmt" },
-    tex = { "latexindent" },
+    tex = {
+      "tex-fmt",
+      "latexindent",
+      stop_after_first = true,
+    },
     plaintex = { "latexindent" },
     bib = { "bibtex-tidy" },
     -- typst = { "prettypst" },
@@ -47,7 +52,6 @@ local opts = {
   },
   format_on_save = {
     timeout_ms = 500,
-    lsp_format = "fallback",
   },
 }
 
