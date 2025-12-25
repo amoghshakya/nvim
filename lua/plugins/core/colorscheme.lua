@@ -9,7 +9,7 @@ return {
       default_integrations = true,
       auto_integrations = true,
       color_overrides = {
-        mocha = require("configs.colorscheme").gruvbox.dark,
+        -- mocha = require("configs.colorscheme").gruvbox.dark, -- custom overrides for gruvbox colors
       },
       styles = {
         miscs = {},
@@ -34,9 +34,16 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      require("catppuccin").setup(opts)
-      vim.cmd.colorscheme("catppuccin")
+    -- init = function()
+    --   vim.cmd.colorscheme("catppuccin")
+    -- end,
+  },
+  {
+    "sainnhe/gruvbox-material",
+    priority = 1000,
+    config = function()
+      vim.g.gruvbox_material_background = "hard"
+      vim.cmd.colorscheme("gruvbox-material")
     end,
   },
 }

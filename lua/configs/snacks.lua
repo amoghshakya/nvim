@@ -322,39 +322,40 @@ M.picker = {
     },
   },
   layouts = {
-    default = {
-      layout = {
-        box = "horizontal",
-        width = 0.8,
-        min_width = 120,
-        height = 0.8,
-        backdrop = false,
-        {
-          box = "vertical",
-          border = "solid",
-          title = "{title} {live} {flags}",
-          { win = "input", height = 1, border = "bottom" },
-          { win = "list", border = "none" },
-        },
-        { win = "preview", title = "{preview}", border = "solid", width = 0.5 },
-      },
-    },
-    vertical = {
-      layout = {
-        backdrop = false,
-        width = 0.8,
-        min_width = 80,
-        height = 0.8,
-        min_height = 30,
-        box = "vertical",
-        border = "solid",
-        title = "{title} {live} {flags}",
-        title_pos = "center",
-        { win = "input", height = 1, border = "bottom" },
-        { win = "list", border = "none" },
-        { win = "preview", title = "{preview}", height = 0.4, border = "top" },
-      },
-    },
+    -- styling the presets
+    -- default = {
+    --   layout = {
+    --     box = "horizontal",
+    --     width = 0.8,
+    --     min_width = 120,
+    --     height = 0.8,
+    --     backdrop = false,
+    --     {
+    --       box = "vertical",
+    --       border = "solid",
+    --       title = "{title} {live} {flags}",
+    --       { win = "input", height = 1, border = "bottom" },
+    --       { win = "list", border = "none" },
+    --     },
+    --     { win = "preview", title = "{preview}", border = "solid", width = 0.5 },
+    --   },
+    -- },
+    -- vertical = {
+    --   layout = {
+    --     backdrop = false,
+    --     width = 0.8,
+    --     min_width = 80,
+    --     height = 0.8,
+    --     min_height = 30,
+    --     box = "vertical",
+    --     border = "solid",
+    --     title = "{title} {live} {flags}",
+    --     title_pos = "center",
+    --     { win = "input", height = 1, border = "bottom" },
+    --     { win = "list", border = "none" },
+    --     { win = "preview", title = "{preview}", height = 0.4, border = "top" },
+    --   },
+    -- },
   },
   sources = {
     files = {
