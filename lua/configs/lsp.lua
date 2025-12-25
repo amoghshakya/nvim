@@ -9,42 +9,20 @@ M.servers = {
       },
     },
   },
+  tsgo = {},
   tinymist = {
-    on_attach = function(client, bufnr)
-      vim.keymap.set("n", "<localleader>tp", function()
-        client:exec_cmd({
-          title = "pin",
-          command = "tinymist.pinMain",
-          arguments = { vim.api.nvim_buf_get_name(0) },
-        }, { bufnr = bufnr })
-      end, { desc = "[T]inymist [P]in", noremap = true })
-
-      vim.keymap.set("n", "<localleader>tu", function()
-        client:exec_cmd({
-          title = "unpin",
-          command = "tinymist.pinMain",
-          arguments = { vim.v.null },
-        }, { bufnr = bufnr })
-      end, { desc = "[T]inymist [U]npin", noremap = true })
-
-      vim.keymap.set("n", "<localleader>tw", function()
-        client:exec_cmd({
-          title = "preview",
-          command = "tinymist.startDefaultPreview",
-          arguments = { vim.api.nvim_buf_get_name(0) },
-        }, { bufnr = bufnr })
-      end, { desc = "[T]inymist [W]eb Preview", noremap = true })
-
-      vim.keymap.set("n", "<localleader>tt", "<cmd>OpenPdf<cr>", {
-        desc = "[T]inymist [T]ypst PDF",
-        noremap = true,
-        buffer = bufnr,
-      })
-    end,
     settings = {
       formatterMode = "typstyle",
       exportPdf = "onSave",
-      semanticTokens = "disable",
+      preview = {
+        browsing = {
+          args = {
+            "--data-plane-host=127.0.0.1:0",
+            -- "--invert-colors=auto",
+            "--open",
+          },
+        },
+      },
     },
   },
   bashls = {},
@@ -107,6 +85,7 @@ M.servers = {
   harper_ls = {
     filetypes = { "tex", "latex", "markdown", "typst" },
   },
+  gopls = {},
   qmlls = {},
 }
 

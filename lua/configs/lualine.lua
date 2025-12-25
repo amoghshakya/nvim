@@ -7,7 +7,6 @@ local excluded_filetypes = {
   "snacks_picker_list",
   "snacks_layout_box",
   "snacks_terminal",
-  "fugitive",
 }
 
 local exclude = function()
@@ -34,24 +33,13 @@ M.opts = {
       statusline = { "lazy", "mason" },
       winbar = {},
     },
+    theme = "auto",
   },
   refresh = {
     statusline = 100,
     tabline = 100,
     winbar = 100,
   },
-  -- tabline = {
-  --   lualine_a = {},
-  --   lualine_z = {
-  --     {
-  --       "tabs",
-  --       cond = function()
-  --         -- show tabline only if there are multiple tabs
-  --         return vim.fn.tabpagenr("$") > 1
-  --       end,
-  --     },
-  --   },
-  -- },
   sections = {
     lualine_a = {
       {
@@ -87,7 +75,7 @@ M.opts = {
         cond = function()
           return conditions.buffer_not_empty() and exclude()
         end,
-        padding = { left = 1, right = 1 },
+        padding = { left = 0, right = 1 },
       },
     },
     lualine_x = {

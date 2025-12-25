@@ -1,6 +1,6 @@
 --[[
 -- A very fast plugin for highlighting colors in files.
--- -- This plugin is useful for quickly identifying colors in code files, especially in CSS and HTML files.
+-- This plugin is useful for quickly identifying colors in code files, especially in CSS and HTML files.
 --]]
 
 return {
@@ -28,7 +28,7 @@ return {
       sass = {
         enabled = true,
       },
-      mode = "virtualtext", -- For VSCode-like color preview
+      -- mode = "virtualtext", -- For VSCode-like color preview
       virtualtext = "",
       virtualtext_inline = "before",
     },
