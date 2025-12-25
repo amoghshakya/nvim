@@ -11,9 +11,10 @@ o.winborder = "single"
 
 -- Convert tabs to spaces
 o.expandtab = true
-o.shiftwidth = 4
-o.tabstop = 4
-o.softtabstop = 4
+o.shiftwidth = 2
+o.tabstop = 2
+o.softtabstop = 2
+o.autoindent = true
 
 -- Make line numbers default
 o.number = true
@@ -64,6 +65,9 @@ o.splitbelow = true
 --  and `:help 'listchars'`
 o.list = true
 opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
+-- global statusline
+opt.laststatus = 3
 
 -- Preview substitutions live, as you type!
 o.inccommand = "split"

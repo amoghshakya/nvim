@@ -11,9 +11,9 @@ M.gruvbox = {
   dark = {
     rosewater = "#ea6962",
     flamingo = "#ea6962",
+    pink = "#d3869b",
     red = "#ea6962",
     maroon = "#ea6962",
-    pink = "#d3869b",
     mauve = "#d3869b",
     peach = "#e78a4e",
     yellow = "#d8a657",
@@ -94,6 +94,45 @@ M.rosepine = {
     base = "#191724",
     mantle = "#13101b",
     crust = "#0b0b12",
+  },
+}
+
+M.nord = {
+  dark = {
+    rosewater = "#e5e9f0",
+    flamingo = "#d8dee9",
+    pink = "#b48ead",
+
+    red = "#bf616a",
+    maroon = "#d08770",
+    mauve = "#b48ead",
+
+    peach = "#d08770",
+    yellow = "#ebcb8b",
+
+    green = "#a3be8c",
+    teal = "#8fbcbb",
+    sky = "#88c0d0",
+    sapphire = "#81a1c1",
+
+    blue = "#5e81ac",
+    lavender = "#81a1c1",
+
+    text = "#e5e9f0",
+    subtext1 = "#d8dee9",
+    subtext0 = "#cfd6e6",
+
+    overlay2 = "#8b93a6",
+    overlay1 = "#6b7280",
+    overlay0 = "#4c566a",
+
+    surface2 = "#3b4252",
+    surface1 = "#2f3543",
+    surface0 = "#252a35",
+
+    base = "#1e222a",
+    mantle = "#191d24",
+    crust = "#14171c",
   },
 }
 

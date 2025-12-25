@@ -126,8 +126,6 @@ M.config = function()
   dap.listeners.before.event_terminated["dapui_config"] = dapui.close
   dap.listeners.before.event_exited["dapui_config"] = dapui.close
 
-  require("dap-python").setup("python")
-
   dap.adapters.lldb = {
     type = "executable",
     command = "codelldb", -- or if not in $PATH: "/absolute/path/to/codelldb"

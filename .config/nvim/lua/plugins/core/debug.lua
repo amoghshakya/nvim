@@ -13,10 +13,10 @@ return {
     "jay-babu/mason-nvim-dap.nvim",
 
     -- Python debugging support
-    {
-      "mfussenegger/nvim-dap-python",
-      ft = "python",
-    },
+    -- {
+    --   "mfussenegger/nvim-dap-python",
+    --   ft = "python",
+    -- },
   },
   keys = require("configs.debug").keys,
   config = require("configs.debug").config,
