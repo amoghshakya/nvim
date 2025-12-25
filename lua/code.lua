@@ -1,3 +1,7 @@
+--[[
+-- VSCode Neovim Options
+--]]
+
 local map = vim.keymap.set
 
 -- view open buffers
@@ -79,17 +83,17 @@ map("n", "<C-n>", function()
 end, {
   desc = "Focus on Explorer",
   silent = true,
-  remap = true,
+  remap = false,
 })
 
 -- Focus file explorer
-map("n", "<leader>e", function()
-  vim.fn.VSCodeNotify("workbench.view.explorer")
-end, {
-  desc = "Focus on Explorer",
-  silent = true,
-  remap = false,
-})
+-- map("n", "<leader>e", function()
+--   vim.fn.VSCodeNotify("workbench.view.explorer")
+-- end, {
+--   desc = "Focus on Explorer",
+--   silent = true,
+--   remap = false,
+-- })
 
 -- <leader>nn for new empty buffer
 map("n", "<leader>nn", function()

@@ -20,13 +20,6 @@ return {
     indent = {
       enabled = true,
     },
-    ---@type snacks.image.Config
-    image = {
-      enabled = true,
-      math = {
-        enabled = true,
-      },
-    },
     input = { enabled = true },
     lazygit = {
       enabled = true,

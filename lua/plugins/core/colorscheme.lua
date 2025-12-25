@@ -9,16 +9,8 @@ return {
       default_integrations = true,
       auto_integrations = true,
       color_overrides = {
-        mocha = require("configs.colorscheme").rosepine.dark,
+        mocha = require("configs.colorscheme").gruvbox.dark,
       },
-      custom_highlights = function(colors)
-        return {
-          lualine_c_normal = {
-            bg = colors.base,
-            fg = colors.text,
-          },
-        }
-      end,
       styles = {
         miscs = {},
       },
@@ -46,11 +38,5 @@ return {
       require("catppuccin").setup(opts)
       vim.cmd.colorscheme("catppuccin")
     end,
-  },
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
   },
 }

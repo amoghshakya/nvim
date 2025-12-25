@@ -7,9 +7,8 @@ return {
   "saghen/blink.cmp",
   event = { "InsertEnter" },
   version = "*",
-  -- optional: provides snippets for the snippet source
   dependencies = {
-    {
+    { -- optional: provides snippets for the snippet source
       "L3MON4D3/LuaSnip",
       event = { "InsertEnter" },
       build = (function()
@@ -42,6 +41,7 @@ return {
       preset = "luasnip",
       -- score_offset = 20,
     },
+
     keymap = {
       preset = "enter",
       ["<Tab>"] = {
@@ -65,6 +65,7 @@ return {
         "fallback",
       },
     },
+
     appearance = {
       -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
@@ -99,34 +100,10 @@ return {
           treesitter = { "lsp" },
         },
       },
-      trigger = {
-        show_on_trigger_character = false,
-        show_on_blocked_trigger_characters = { "{", "\n", "\t", ">", " " },
-      },
       documentation = {
         -- Show documentation beside the completion menu
         -- Really helpful for seeing what you're completing
         auto_show = true,
-      },
-      list = {
-        selection = {
-          -- Preselect the first item in the list
-          preselect = true,
-          -- I like to insert on accept but not on select
-          -- It's kind of annoying when you have to edit what you're typing
-          -- but auto complete just updates what you were typing.
-          auto_insert = false,
-        },
-      },
-      accept = {
-        -- Add brackets (if it's a function or method) on accepting completion
-        auto_brackets = {
-          enabled = true,
-          kind_resolution = {
-            enabled = true,
-            blocked_filetypes = { "typescriptreact", "javascriptreact", "vue", "tex" },
-          },
-        },
       },
     },
 
@@ -160,8 +137,7 @@ return {
       },
     },
 
-    -- Disable blink for commandline
-    -- Fuzzy searching is nice but it's annoying on commandline
+    -- blink autocomplete for commandline
     cmdline = {
       enabled = false,
     },

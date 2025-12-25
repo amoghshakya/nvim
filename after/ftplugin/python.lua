@@ -1,1 +1,3 @@
-require("virt-column").update({ virtcolumn = "80" })
+if not vim.g.vscode then
+  require("virt-column").update({ virtcolumn = "80" })
+end
