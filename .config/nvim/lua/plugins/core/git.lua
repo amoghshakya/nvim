@@ -3,6 +3,10 @@ return {
     "tpope/vim-fugitive",
     event = "VeryLazy",
     init = function()
+      vim.keymap.set("n", "<leader>gg", "<cmd>Git<CR>", {
+        desc = "Open [G]it fu[g]itive",
+        silent = true,
+      })
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "fugitive",
         callback = function()
@@ -27,19 +31,19 @@ return {
     event = { "BufReadPost" },
     opts = {
       signs = {
-        add = { text = "│" },
-        change = { text = "│" },
-        untracked = { text = "┆" },
-        delete = { text = "" },
-        topdelete = { text = "" },
-        changedelete = { text = "󱕖" },
-      },
-      signs_staged = {
-        add = { text = "│" },
-        change = { text = "│" },
+        add = { text = "┃" },
+        change = { text = "┃" },
         delete = { text = "_" },
         topdelete = { text = "‾" },
-        changedelete = { text = "~" },
+        changedelete = { text = "󱕖" },
+        untracked = { text = "┆" },
+      },
+      signs_staged = {
+        add = { text = "┃" },
+        change = { text = "┃" },
+        delete = { text = "_" },
+        topdelete = { text = "‾" },
+        changedelete = { text = "󱕖" },
         untracked = { text = "┆" },
       },
       signs_staged_enable = true,

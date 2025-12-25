@@ -153,6 +153,13 @@ M.keys = {
     desc = "[G]it [L]ogs",
   },
   {
+    "<leader>gb",
+    function()
+      Snacks.picker.git_branches()
+    end,
+    desc = "[G]it [B]ranches",
+  },
+  {
     "<leader>ft",
     function()
       -- This is a custom picker defined in the config below
@@ -444,28 +451,6 @@ M.picker = {
       layout = {
         preset = "vscode",
       },
-    },
-    colorschemes = {
-      finder = "vim_colorschemes",
-      format = "text",
-      preview = "colorscheme",
-      layout = {
-        preset = "vscode",
-      },
-      on_change = function(_, item)
-        if item then
-          vim.cmd("colorscheme " .. item.text)
-        end
-      end,
-      confirm = function(picker, item)
-        picker:close()
-        if item then
-          picker.preview.state.colorscheme = nil
-          vim.schedule(function()
-            vim.cmd("colorscheme " .. item.text)
-          end)
-        end
-      end,
     },
     keymaps = {
       layouts = {

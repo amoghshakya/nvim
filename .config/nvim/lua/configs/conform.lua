@@ -7,6 +7,7 @@ local opts = {
     lsp_format = "never",
   },
   formatters_by_ft = {
+    go = { "gofmt" },
     lua = { "stylua" },
     css = { "prettier" },
     scss = { "prettier" },
@@ -29,11 +30,12 @@ local opts = {
     },
     plaintex = { "latexindent" },
     bib = { "bibtex-tidy" },
-    -- typst = { "prettypst" },
+    typst = { "typstyle" },
     markdown = { "markdownlint", "prettier" },
     htmldjango = { "djlint" },
     sql = { "sql_formatter" },
     blade = { "blade-formatter" },
+    qml = { "qmlformat" },
   },
   formatters = {
     latexindent = {
@@ -48,6 +50,9 @@ local opts = {
       command = "blade-formatter",
       args = { "--stdin", "--sort-tailwindcss-classes" },
       stdin = true,
+    },
+    typstyle = {
+      args = { "--wrap-text" },
     },
   },
   format_on_save = {

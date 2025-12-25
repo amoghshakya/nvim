@@ -9,7 +9,7 @@ return {
   },
   {
     "tiagovla/scope.nvim",
-    event = { "InsertEnter" },
+    event = { "BufWinEnter" },
     config = true,
   },
 }
