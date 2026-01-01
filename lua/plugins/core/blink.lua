@@ -105,6 +105,10 @@ return {
         -- Really helpful for seeing what you're completing
         auto_show = true,
       },
+      trigger = {
+        show_on_keyword = true,
+        show_on_insert = false, -- only want it to show when i type
+      },
     },
 
     sources = {

@@ -7,7 +7,8 @@ local g = vim.g
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
-o.winborder = "single"
+-- Set border style of floating windows.
+o.winborder = "rounded"
 
 -- Convert tabs to spaces
 o.expandtab = true

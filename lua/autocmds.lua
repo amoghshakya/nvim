@@ -14,22 +14,6 @@ autocmd("TextYankPost", {
   end,
 })
 
--- Close windows with `q`
-autocmd("FileType", {
-  pattern = { "qf", "help" },
-  callback = function()
-    vim.keymap.set("n", "q", "<cmd>bd<CR>", { silent = true, buffer = true })
-  end,
-})
-
--- Vertical split help windows
-autocmd("FileType", {
-  pattern = "help",
-  callback = function()
-    vim.cmd.wincmd("L")
-  end,
-})
-
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -55,13 +39,4 @@ autocmd("VimEnter", {
 autocmd("VimLeavePre", {
   desc = "Remove kitty padding on startup",
   command = ":silent !kitty @ set-spacing padding=4 margin=0",
-})
-
--- Don't list quickfix buffers
-autocmd("FileType", {
-  pattern = "qf",
-  desc = "Don't list quickfix buffers",
-  callback = function()
-    vim.opt_local.buflisted = false
-  end,
 })
