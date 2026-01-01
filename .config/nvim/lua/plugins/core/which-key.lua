@@ -49,11 +49,11 @@ return { -- Useful plugin to show you pending keybinds.
     spec = {
       { "<leader>a", group = "[A]gent" },
       { "<leader>f", group = "[F]ile" },
-      { "<leader>d", group = "[D]ocument" },
       { "<leader>s", group = "[S]earch" },
       { "<leader>t", group = "[T]oggle" },
       { "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
       { "<leader>n", group = "[N]ew" },
+      { "<leader>g", group = "[G]it" },
       { "gr", group = "LSP [R]eferences", mode = { "n", "v" } },
     },
   },

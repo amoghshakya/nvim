@@ -19,8 +19,9 @@ return {
         gitsigns = true,
         treesitter = true,
         treesitter_context = true,
-        native_lsp = {
-          enabled = true,
+        mason = true,
+        blink_cmp = {
+          style = "bordered",
         },
         dap_ui = true,
         dropbar = {

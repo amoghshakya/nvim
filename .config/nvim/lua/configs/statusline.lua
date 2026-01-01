@@ -42,30 +42,6 @@ local function has_git_changes()
     and ((status_dict.added or 0) ~= 0 or (status_dict.removed or 0) ~= 0 or (status_dict.changed or 0) ~= 0)
 end
 
-M.colors = function()
-  return {
-    bright_bg = utils.get_highlight("Normal").bg,
-    dark_bg = utils.get_highlight("StatusLine").bg,
-    bright_fg = utils.get_highlight("Normal").fg,
-    dark_fg = utils.get_highlight("StatusLineNC").fg,
-    red = utils.get_highlight("DiagnosticError").fg,
-    dark_red = utils.get_highlight("DiffDelete").bg,
-    green = utils.get_highlight("String").fg,
-    blue = utils.get_highlight("Function").fg,
-    gray = utils.get_highlight("NonText").fg,
-    orange = utils.get_highlight("Constant").fg,
-    purple = utils.get_highlight("Statement").fg,
-    cyan = utils.get_highlight("Special").fg,
-    diag_warn = utils.get_highlight("DiagnosticWarn").fg,
-    diag_error = utils.get_highlight("DiagnosticError").fg,
-    diag_hint = utils.get_highlight("DiagnosticHint").fg,
-    diag_info = utils.get_highlight("DiagnosticInfo").fg,
-    git_del = utils.get_highlight("diffRemoved").fg,
-    git_add = utils.get_highlight("diffAdded").fg,
-    git_change = utils.get_highlight("diffChanged").fg,
-  }
-end
-
 local Space = {
   provider = " ",
 }
@@ -208,8 +184,8 @@ local Diagnostics = {
   end,
 
   update = {
-    "BufEnter",
     "DiagnosticChanged",
+    "BufEnter",
   },
 
   -- Format
@@ -320,8 +296,8 @@ local GitBranch = {
   condition = is_git_repo,
 
   hl = {
-    bg = "blue",
-    fg = "bright_bg",
+    bg = "dark_bg",
+    fg = "bright_fg",
   },
 
   init = function(self)
@@ -360,7 +336,7 @@ local FileNameBlock = {
 
 local FileIcon = {
   init = function(self)
-    local filename = self.filename
+    local filename = vim.fn.fnamemodify(self.filename, ":t")
     local extension = vim.fn.fnamemodify(filename, ":e")
     self.icon, self.icon_color = require("nvim-web-devicons").get_icon_color(filename, extension, {
       default = true,
@@ -502,6 +478,24 @@ local OilStatus = {
   },
 }
 
+-- I take no credits for this! 🦁
+local ScrollBar = {
+  static = {
+    -- sbar = { "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" },
+    sbar = { "█", "▇", "▆", "▅", "▄", "▃", "▂", "▁", " " },
+
+    -- Another variant, because the more choice the better.
+    -- sbar = { '🭶', '🭷', '🭸', '🭹', '🭺', '🭻' }
+  },
+  provider = function(self)
+    local curr_line = vim.api.nvim_win_get_cursor(0)[1]
+    local lines = vim.api.nvim_buf_line_count(0)
+    local i = math.floor((curr_line - 1) / lines * #self.sbar) + 1
+    return string.rep(self.sbar[i], 2)
+  end,
+  hl = { bg = "blue", fg = "dark_bg" },
+}
+
 local leftBlock = {
   condition = function()
     return not vim.tbl_contains(excluded_filetypes, vim.bo.filetype)
@@ -529,7 +523,8 @@ local rightBlock = {
       fg = "blue",
       bg = "dark_bg",
     },
-    Percentage,
+    -- Percentage,
+    ScrollBar,
   },
   {
     condition = function()
