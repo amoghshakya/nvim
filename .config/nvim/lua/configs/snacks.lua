@@ -170,7 +170,7 @@ M.keys = {
   },
   -- Terminal toggles
   {
-    "<A-`>",
+    "<A-t>",
     function()
       local last = vim.g.last_horizontal_term
       if not last then
