@@ -39,6 +39,14 @@ return {
         desc = "[J]ump to buffer",
         silent = true,
       },
+      {
+        "<leader>cb",
+        function()
+          BufferSticks.close()
+        end,
+        desc = "[C]lose [B]uffer",
+        silent = true,
+      },
     },
   },
   {

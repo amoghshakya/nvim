@@ -9,7 +9,8 @@ M.servers = {
       },
     },
   },
-  tsgo = {},
+  ty = {},
+  -- tsgo = {},
   tinymist = {
     settings = {
       formatterMode = "typstyle",
@@ -31,12 +32,12 @@ M.servers = {
   astro = {},
   tailwindcss = {},
   emmet_language_server = {},
-  basedpyright = {},
+  -- basedpyright = {},
   rust_analyzer = {},
   clangd = {},
   jsonls = {},
   intelephense = {
-    on_attach = function(client, bufnr)
+    on_attach = function(client, _)
       client.server_capabilities.documentFormattingProvider = true
     end,
     init_options = {

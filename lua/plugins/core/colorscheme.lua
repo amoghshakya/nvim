@@ -9,7 +9,7 @@ return {
       default_integrations = true,
       auto_integrations = true,
       color_overrides = {
-        mocha = require("configs.colorscheme").gruvbox.dark,
+        -- mocha = require("configs.colorscheme").gruvbox.dark,
       },
       styles = {
         miscs = {},
