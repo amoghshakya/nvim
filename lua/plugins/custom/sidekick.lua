@@ -11,6 +11,17 @@ return {
   },
   keys = {
     {
+      "<C-y>",
+      function()
+        -- if there is a next edit, jump to it, otherwise apply it if any
+        if not require("sidekick").nes_jump_or_apply() then
+          return "<C-y>" -- fallback to normal behavior
+        end
+      end,
+      expr = true,
+      desc = "Goto/Apply Next Edit Suggestion",
+    },
+    {
       "<c-.>",
       function()
         require("sidekick.cli").toggle()
@@ -72,7 +83,7 @@ return {
       mode = { "n", "x" },
       desc = "Sidekick Select Prompt",
     },
-    -- Example of a keybinding to open Claude directly
+    -- Example of a keybinding to open Copilot directly
     {
       "<leader>ac",
       function()

@@ -29,4 +29,9 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = { signs = false },
   },
+  { -- for organizing buffers within tabpages
+    "tiagovla/scope.nvim",
+    event = { "BufWinEnter" },
+    config = true,
+  },
 }

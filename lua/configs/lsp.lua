@@ -1,18 +1,47 @@
 local M = {}
 
 -- Language Servers to enable
+--- @type table<string, vim.lsp.Config>
 M.servers = {
+  -- Special Lua Config, as recommended by neovim help docs
   lua_ls = {
+    on_init = function(client)
+      if client.workspace_folders then
+        local path = client.workspace_folders[1].name
+        if
+          path ~= vim.fn.stdpath("config")
+          and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+        then
+          return
+        end
+      end
+
+      client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+        runtime = {
+          version = "LuaJIT",
+          path = { "lua/?.lua", "lua/?/init.lua" },
+        },
+        workspace = {
+          checkThirdParty = false,
+          -- NOTE: this is a lot slower and will cause issues when working on your own configuration.
+          --  See https://github.com/neovim/nvim-lspconfig/issues/3189
+          library = vim.tbl_extend("force", vim.api.nvim_get_runtime_file("", true), {
+            "${3rd}/luv/library",
+            "${3rd}/busted/library",
+          }),
+        },
+      })
+    end,
     settings = {
-      Lua = {
-        completion = { callSnippet = "Replace" },
-      },
+      Lua = {},
     },
   },
   ty = {},
   -- tsgo = {},
+  vtsls = {},
   tinymist = {
     settings = {
+      projectResolution = "lockDatabase",
       formatterMode = "typstyle",
       exportPdf = "onSave",
       preview = {
@@ -140,9 +169,15 @@ end
 
 ---@type vim.diagnostic.Opts
 M.diagnostics = {
+  update_in_insert = false,
   severity_sort = true,
-  float = { source = "if_many" },
-  underline = { severity = vim.diagnostic.severity.ERROR },
+  float = { border = "rounded", source = "if_many" },
+  underline = {
+    severity = {
+      min = vim.diagnostic.severity.WARN,
+    },
+  },
+  jump = { float = true },
   signs = vim.g.have_nerd_font and {
     text = {
       [vim.diagnostic.severity.ERROR] = "󰅚 ",
@@ -151,19 +186,8 @@ M.diagnostics = {
       [vim.diagnostic.severity.HINT] = "󰌶 ",
     },
   } or {},
-  virtual_text = {
-    source = "if_many",
-    spacing = 2,
-    format = function(diagnostic)
-      local diagnostic_message = {
-        [vim.diagnostic.severity.ERROR] = diagnostic.message,
-        [vim.diagnostic.severity.WARN] = diagnostic.message,
-        [vim.diagnostic.severity.INFO] = diagnostic.message,
-        [vim.diagnostic.severity.HINT] = diagnostic.message,
-      }
-      return diagnostic_message[diagnostic.severity]
-    end,
-  },
+  virtual_text = true,
+  virtual_lines = false,
 }
 
 return M

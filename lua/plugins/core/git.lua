@@ -1,32 +1,16 @@
 return {
   {
-    "tpope/vim-fugitive",
-    event = "VeryLazy",
-    init = function()
-      vim.keymap.set("n", "<leader>gg", "<cmd>Git<CR>", {
-        desc = "Open [G]it fu[g]itive",
-        silent = true,
-      })
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "fugitive",
-        callback = function()
-          -- Do not list fugitive buffers
-          vim.opt_local.buflisted = false
-          -- Close Git fugitive with `q`
-          vim.keymap.set("n", "q", "<cmd>q<CR>", {
-            buffer = true,
-            silent = true,
-            desc = "Close fugitive",
-          })
-          -- Make <leader>x behave the same way
-          vim.keymap.set("n", "<leader>x", "<cmd>q<CR>", {
-            buffer = true,
-            silent = true,
-            desc = "Close fugitive",
-          })
-        end,
-      })
-    end,
+    "NeogitOrg/neogit",
+    lazy = true,
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- required
+      "esmuellert/codediff.nvim", -- optional
+      "folke/snacks.nvim",
+    },
+    cmd = "Neogit",
+    keys = {
+      { "<leader>gg", "<cmd>Neogit<cr>", desc = "Show Neo[g]it UI" },
+    },
   },
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     "lewis6991/gitsigns.nvim",

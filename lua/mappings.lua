@@ -33,7 +33,7 @@ map("n", "<2-LeftMouse>", "<C-]>", { noremap = true, silent = true })
 
 -- Buffers
 map("n", "<Tab>", "<Cmd>bnext<CR>", { desc = "Next buffer", silent = true })
-map("n", "<S-Tab>", "<Cmd>bNext<CR>", { desc = "Next buffer", silent = true })
+map("n", "<S-Tab>", "<Cmd>bprevious<CR>", { desc = "Previous buffer", silent = true })
 map("n", "<leader>nn", "<Cmd>enew<CR>", { desc = "[N]ew empty buffer", silent = true })
 map("n", "<leader>x", function()
   -- Closes the buffer without affecting the split layout

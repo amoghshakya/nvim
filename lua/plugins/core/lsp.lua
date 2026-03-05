@@ -31,11 +31,15 @@ return {
           },
         },
       },
+      "saghen/blink.cmp",
     },
     config = function()
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = require("configs.lsp").mappings,
       })
+      local capabilities = require("blink-cmp").get_lsp_capabilities()
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
+
       vim.diagnostic.config(require("configs.lsp").diagnostics)
 
       local servers = require("configs.lsp").servers or {}
@@ -50,7 +54,13 @@ return {
       -- the system
       for server, _ in pairs(servers) do
         local pkg = mason_mapping[server]
-        if vim.fn.executable(pkg) == 0 then
+
+        if type(pkg) == "string" then
+          if vim.fn.executable(pkg) == 0 then
+            table.insert(ensure_installed, server)
+          end
+        else
+          -- If it's not in the mason mapping, include it anyway
           table.insert(ensure_installed, server)
         end
       end
@@ -79,18 +89,30 @@ return {
       },
     },
   },
+  -- {
+  --   "pmizio/typescript-tools.nvim",
+  --   ft = {
+  --     "typescript",
+  --     "typescriptreact",
+  --     "typescript.tsx",
+  --     "javascript",
+  --     "javascriptreact",
+  --     "javascript.jsx",
+  --     "astro",
+  --   },
+  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  --   opts = {},
+  -- },
   {
-    "pmizio/typescript-tools.nvim",
-    ft = {
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-      "javascript",
-      "javascriptreact",
-      "javascript.jsx",
-      "astro",
-    },
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    "yioneko/nvim-vtsls",
+    event = { "VeryLazy" },
+    dependencies = { "neovim/nvim-lspconfig" },
+    opts = nil,
+    config = false,
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    event = { "BufReadPre", "BufNewFile" },
     opts = {},
   },
   {

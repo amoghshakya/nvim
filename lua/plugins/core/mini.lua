@@ -7,7 +7,6 @@ return {
       n_lines = 500,
       silent = true,
     })
-    require("mini.pairs").setup()
     require("mini.operators").setup()
     -- require("mini.sessions").setup({
     --   silent = true,

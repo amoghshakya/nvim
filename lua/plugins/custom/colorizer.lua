@@ -1,36 +1,34 @@
 --[[
 -- A very fast plugin for highlighting colors in files.
--- This plugin is useful for quickly identifying colors in code files, especially in CSS and HTML files.
+-- -- This plugin is useful for quickly identifying colors in code files, especially in CSS and HTML files.
 --]]
 
 return {
   "catgoose/nvim-colorizer.lua",
-  -- Only start the plugin if the filetype is one of the following
-  ft = { -- Get rid of this if you want to see colors in all filetypes
-    "css",
-    "scss",
-    "less",
-    "html",
-    "javascript",
-    "typescript",
-    "javascriptreact",
-    "typescriptreact",
-    "vue",
-    "svelte",
-  },
+  event = "BufReadPre",
   opts = {
-    user_default_options = {
-      css = true,
-      tailwind = "both",
-      tailwind_opts = {
-        update_names = true,
+    lazy_load = true,
+    options = {
+      parsers = {
+        css = true,
+        css_fn = true, -- rgb, hsl, oklch
+        tailwind = {
+          enable = true,
+          update_names = true,
+          lsp = {
+            enable = true,
+          },
+        },
+        sass = { enable = true },
+        hex = { enable = true },
       },
-      sass = {
-        enabled = true,
+      display = {
+        mode = "background",
+        virtualtext = {
+          char = "",
+          position = "before",
+        },
       },
-      -- mode = "virtualtext", -- For VSCode-like color preview
-      virtualtext = "",
-      virtualtext_inline = "before",
     },
   },
 }

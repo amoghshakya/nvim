@@ -1,5 +1,7 @@
 --[[
 -- VSCode Neovim Options
+-- i cannot name this file vscode.lua since the VSCode Neovim extension uses
+-- that name for its own config file
 --]]
 
 local map = vim.keymap.set
@@ -110,7 +112,7 @@ map("n", "<leader>x", function()
 end, { desc = "Close buffer", silent = true })
 
 -- accept inline suggestion
-map("i", "<A-l>", function()
+map({ "i", "n" }, "<A-l>", function()
   vim.fn.VSCodeNotify("editor.action.inlineSuggest.commit")
 end, { desc = "Accept inline suggestion", silent = true })
 
@@ -171,6 +173,22 @@ map("n", "<leader>fm", function()
   vim.fn.VSCodeNotify("editor.action.formatDocument")
 end, {
   desc = "[F]ormat code",
+  silent = true,
+  remap = false,
+})
+
+map("n", "<Tab>", function()
+  vim.fn.VSCodeNotify("workbench.action.nextEditor")
+end, {
+  desc = "Next buffer",
+  silent = true,
+  remap = false,
+})
+
+map("n", "<S-Tab>", function()
+  vim.fn.VSCodeNotify("workbench.action.previousEditor")
+end, {
+  desc = "Next buffer",
   silent = true,
   remap = false,
 })

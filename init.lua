@@ -1,3 +1,6 @@
+-- Experimental loader. See `:help vim.loader`
+vim.loader.enable()
+
 -- Global options
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -39,6 +42,8 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 if vim.g.vscode then
+  -- if we're running in vscode, only load the vscode plugin spec
+  -- which contains the minimal set of plugins needed to make neovim work well in vscode
   require("lazy").setup({
     {
       import = "plugins.vscode",

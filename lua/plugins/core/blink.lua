@@ -33,6 +33,7 @@ return {
         },
       },
     },
+    "fang2hou/blink-copilot",
   },
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
@@ -44,6 +45,7 @@ return {
 
     keymap = {
       preset = "enter",
+      ["<CR>"] = { "accept", "fallback" },
       ["<Tab>"] = {
         function(cmp)
           if cmp.snippet_active() then
@@ -83,7 +85,30 @@ return {
     },
 
     completion = {
+      accept = {
+        create_undo_point = true,
+        auto_brackets = {
+          enabled = true,
+          kind_resolution = {
+            enabled = true,
+            blocked_filetypes = {
+              "typescriptreact",
+              "javascriptreact",
+              "vue",
+              "astro",
+            },
+          },
+          semantic_token_resolution = {
+            enabled = true,
+            blocked_filetypes = {
+              "java",
+            },
+          },
+        },
+      },
       menu = {
+        -- overriding neovim's border opts here
+        border = "padded",
         draw = {
           padding = { 0, 1 },
           components = {
@@ -95,37 +120,47 @@ return {
           },
           columns = {
             { "kind_icon" },
-            { "label", "kind", gap = 8 },
+            { "label", "label_description", "kind", gap = 1 },
           },
           treesitter = { "lsp" },
         },
       },
       documentation = {
-        -- Show documentation beside the completion menu
-        -- Really helpful for seeing what you're completing
         auto_show = true,
+        auto_show_delay_ms = 300,
       },
       trigger = {
         show_on_keyword = true,
-        show_on_insert = false, -- only want it to show when i type
+        show_on_insert = false,
+        show_on_trigger_character = false,
+        show_on_insert_on_trigger_character = false,
+      },
+      list = {
+        selection = {
+          auto_insert = false,
+        },
+        cycle = {
+          from_bottom = true,
+          from_top = true,
+        },
       },
     },
 
     sources = {
-      default = { "lsp", "path", "snippets" },
+      default = { "lsp", "path", "snippets", "copilot" },
       per_filetype = {
-        lua = { "lsp", "path", "snippets", "lazydev" },
+        lua = { inherit_defaults = true, "lazydev" },
       },
       providers = {
-        lsp = {
-          score_offset = 200,
-        },
-        snippets = {
-          score_offset = 10,
-        },
         lazydev = {
           module = "lazydev.integrations.blink",
           score_offset = 100,
+        },
+        copilot = {
+          name = "copilot",
+          module = "blink-copilot",
+          score_offset = 50,
+          async = true,
         },
       },
     },

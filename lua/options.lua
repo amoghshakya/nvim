@@ -8,7 +8,7 @@ local g = vim.g
 --  For more options, you can see `:help option-list`
 
 -- Set border style of floating windows.
-o.winborder = "rounded"
+o.winborder = "single"
 
 -- Convert tabs to spaces
 o.expandtab = true
@@ -80,8 +80,8 @@ o.cursorline = true
 o.scrolloff = 10
 
 -- Code folding
-vim.wo.foldmethod = "expr"
-vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 

@@ -19,6 +19,7 @@ local excluded_filetypes = {
   "oil",
   "snacks_terminal",
   "qf",
+  "NeogitStatus",
 }
 
 -- put it in a variable to easily change icons later
@@ -123,10 +124,18 @@ local ViMode = {
       local winid = vim.api.nvim_get_current_win()
       local wininfo = vim.fn.getwininfo(winid)[1]
       if wininfo.loclist == 1 then
-        return " Location List "
+        return " %2(" .. "Location List" .. "%) "
       else
-        return " Quickfix List "
+        return " %2(" .. "Quickfix List" .. "%) "
       end
+    end
+
+    if vim.bo.filetype == "NeogitStatus" then
+      return " " .. "" .. " %2(" .. "Neogit" .. "%) "
+    end
+
+    if vim.bo.filetype == "oil" then
+      return " " .. "" .. " %2(" .. "Oil" .. "%) "
     end
     -- local icon = ""
     -- return " " .. icon .. " %2(" .. self.mode_names[self.mode] .. "%) "
@@ -143,13 +152,13 @@ local ViMode = {
   end,
   -- Re-evaluate the component only on ModeChanged event!
   -- Also allows the statusline to be re-evaluated when entering operator-pending mode
-  update = {
-    "ModeChanged",
-    pattern = "*:*",
-    callback = vim.schedule_wrap(function()
-      vim.cmd("redrawstatus")
-    end),
-  },
+  -- update = {
+  --   "ModeChanged",
+  --   pattern = "*:*",
+  --   callback = vim.schedule_wrap(function()
+  --     vim.cmd("redrawstatus")
+  --   end),
+  -- },
 }
 
 local Ruler = {
@@ -334,7 +343,7 @@ local FileNameBlock = {
   end,
 }
 
-local FileIcon = {
+M.FileIcon = {
   init = function(self)
     local filename = vim.fn.fnamemodify(self.filename, ":t")
     local extension = vim.fn.fnamemodify(filename, ":e")
@@ -379,7 +388,7 @@ local FileFlags = {
   },
 }
 
-FileNameBlock = utils.insert(FileNameBlock, FileIcon, FileName, FileFlags, { provider = "%<" })
+FileNameBlock = utils.insert(FileNameBlock, M.FileIcon, FileName, FileFlags, { provider = "%<" })
 
 local HelpFileName = {
   condition = function()

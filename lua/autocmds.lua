@@ -31,12 +31,14 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 
 -- Kitty padding
-autocmd("VimEnter", {
-  desc = "Remove kitty padding on startup",
-  command = ":silent !kitty @ set-spacing padding=0 margin=0",
-})
+if vim.env.TERM == "xterm-kitty" then
+  autocmd("VimEnter", {
+    desc = "Remove kitty padding on startup",
+    command = ":silent !kitty @ set-spacing padding=0 margin=0",
+  })
 
-autocmd("VimLeavePre", {
-  desc = "Remove kitty padding on startup",
-  command = ":silent !kitty @ set-spacing padding=4 margin=0",
-})
+  autocmd("VimLeavePre", {
+    desc = "Remove kitty padding on startup",
+    command = ":silent !kitty @ set-spacing padding=4 margin=0",
+  })
+end

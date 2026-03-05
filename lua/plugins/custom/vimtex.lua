@@ -11,7 +11,7 @@ return {
     config = function()
       -- disable `K` as it conflicts with LSP hover
       vim.g.vimtex_mappings_disable = { ["n"] = { "K" } }
-      vim.g.vimtex_view_method = "zathura_simple"
+      vim.g.vimtex_view_method = "sioyek"
 
       vim.g.vimtex_quickfix_autoclose_after_keystrokes = 25
 
