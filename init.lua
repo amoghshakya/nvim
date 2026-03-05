@@ -1,3 +1,6 @@
+-- Experimental loader. See `:help vim.loader`
+vim.loader.enable()
+
 -- Global options
 -- Set <space> as the leader key
 -- See `:help mapleader`

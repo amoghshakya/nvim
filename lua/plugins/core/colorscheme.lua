@@ -34,16 +34,16 @@ return {
         },
       },
     },
-    -- init = function()
-    --   vim.cmd.colorscheme("catppuccin")
-    -- end,
+    init = function()
+      vim.cmd.colorscheme("catppuccin")
+    end,
   },
   {
     "sainnhe/gruvbox-material",
     priority = 1000,
     config = function()
       vim.g.gruvbox_material_background = "hard"
-      vim.cmd.colorscheme("gruvbox-material")
+      -- vim.cmd.colorscheme("gruvbox-material")
     end,
   },
 }

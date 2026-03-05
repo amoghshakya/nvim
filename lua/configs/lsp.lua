@@ -9,7 +9,6 @@ M.servers = {
       },
     },
   },
-  tsgo = {},
   tinymist = {
     settings = {
       formatterMode = "typstyle",
@@ -52,6 +51,7 @@ M.servers = {
       },
     },
   },
+  vtsls = {},
   texlab = {
     settings = {
       texlab = {
