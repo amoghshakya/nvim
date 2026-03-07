@@ -173,9 +173,7 @@ M.diagnostics = {
   severity_sort = true,
   float = { border = "rounded", source = "if_many" },
   underline = {
-    severity = {
-      min = vim.diagnostic.severity.WARN,
-    },
+    severity = vim.diagnostic.severity.ERROR,
   },
   jump = { float = true },
   signs = vim.g.have_nerd_font and {

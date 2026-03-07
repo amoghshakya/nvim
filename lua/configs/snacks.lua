@@ -328,7 +328,6 @@ M.picker = {
         width = 0.8,
         min_width = 120,
         height = 0.8,
-        backdrop = false,
         {
           box = "vertical",
           border = "solid",
@@ -341,7 +340,6 @@ M.picker = {
     },
     vertical = {
       layout = {
-        backdrop = false,
         width = 0.8,
         min_width = 80,
         height = 0.8,
