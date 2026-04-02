@@ -31,14 +31,11 @@ return {
           },
         },
       },
-      "saghen/blink.cmp",
     },
     config = function()
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = require("configs.lsp").mappings,
       })
-      local capabilities = require("blink-cmp").get_lsp_capabilities()
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
 
       vim.diagnostic.config(require("configs.lsp").diagnostics)
 
@@ -86,6 +83,7 @@ return {
         -- Load luvit types when the `vim.uv` word is found
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
         { path = "snacks.nvim", words = { "Snacks" } },
+        { path = "nvim-lspconfig", words = { "lspconfig" } },
       },
     },
   },

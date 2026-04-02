@@ -463,12 +463,13 @@ local OilStatus = {
   end,
   provider = function()
     local icon = "  "
+    -- default to getcwd if oil isn't ready
     local cwd = vim.fn.getcwd(0)
 
     local ok, oil = pcall(require, "oil")
     if ok then
-      ---@diagnostic disable-next-line
-      cwd = oil.get_current_dir()
+      -- get_current_dir can return nil during initialization
+      cwd = oil.get_current_dir() or vim.fn.getcwd(0)
     end
 
     cwd = vim.fn.fnamemodify(cwd, ":~")
@@ -482,7 +483,11 @@ local OilStatus = {
     "BufEnter",
     "BufWinEnter",
     callback = function()
-      vim.cmd("redrawstatus")
+      -- Use schedule_wrap or a simple pcall to prevent
+      -- crashing during rapid buffer creation
+      vim.schedule(function()
+        vim.cmd("redrawstatus")
+      end)
     end,
   },
 }

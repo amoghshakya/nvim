@@ -7,6 +7,11 @@ return {
   "catgoose/nvim-colorizer.lua",
   event = "BufReadPre",
   opts = {
+    -- ignore following filetypes
+    filetypes = {
+      "*",
+      "!lazy",
+    },
     lazy_load = true,
     options = {
       parsers = {

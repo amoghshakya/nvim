@@ -1,7 +1,11 @@
+--[[
+-- lspconfig setup and configuration
+--]]
+
 local M = {}
 
 -- Language Servers to enable
---- @type table<string, vim.lsp.Config>
+---@type table<string, vim.lsp.Config>
 M.servers = {
   -- Special Lua Config, as recommended by neovim help docs
   lua_ls = {
@@ -32,6 +36,7 @@ M.servers = {
         },
       })
     end,
+    ---@type lspconfig.settings.lua_ls
     settings = {
       Lua = {},
     },
@@ -40,6 +45,7 @@ M.servers = {
   -- tsgo = {},
   vtsls = {},
   tinymist = {
+    ---@type lspconfig.settings.tinymist
     settings = {
       projectResolution = "lockDatabase",
       formatterMode = "typstyle",
@@ -74,6 +80,7 @@ M.servers = {
       globalStoragePath = vim.fn.stdpath("data") .. "/intelephense",
       clearCache = false,
     },
+    ---@type lspconfig.settings.intelephense
     settings = {
       intelephense = {
         files = {

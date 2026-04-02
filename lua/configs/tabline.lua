@@ -35,6 +35,13 @@ local TabPages = {
     bg = "bright_bg",
     fg = "bright_fg",
   },
+  {
+    provider = " TABS ",
+    hl = {
+      fg = "bright_bg",
+      bg = "blue",
+    },
+  },
   utils.make_tablist(Tabpage),
   TabpageClose,
 }
