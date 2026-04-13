@@ -3,7 +3,7 @@ return {
   ft = "typst",
   version = "1.*",
   opts = {
-    open_cmd = "zen-browser %s --class typst-preview",
+    -- open_cmd = "zen-browser %s --class typst-preview",
     dependencies_bin = {
       ["tinymist"] = "tinymist",
     },

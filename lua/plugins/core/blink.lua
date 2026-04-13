@@ -71,17 +71,7 @@ return {
     appearance = {
       -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
-      nerd_font_variant = "mono",
-      kind_icons = {
-        Method = "",
-        Keyword = "󰌋",
-        Constructor = "󰆧",
-        Class = "",
-        Interface = "",
-        Struct = "",
-        Variable = "󰀫",
-        Snippet = "",
-      },
+      nerd_font_variant = "normal",
     },
 
     completion = {
@@ -107,20 +97,38 @@ return {
         },
       },
       menu = {
-        -- overriding neovim's border opts here
-        border = "padded",
         draw = {
-          padding = { 0, 1 },
+          padding = { 1, 1 },
           components = {
             kind_icon = {
               text = function(ctx)
-                return " " .. ctx.kind_icon .. ctx.icon_gap .. " "
+                local icon = ctx.kind_icon
+                if vim.tbl_contains({ "Path" }, ctx.source_name) then
+                  local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
+                  if dev_icon then
+                    icon = dev_icon
+                  end
+                else
+                  icon = require("lspkind").symbol_map[ctx.kind] or ""
+                end
+
+                return icon .. ctx.icon_gap
+              end,
+              highlight = function(ctx)
+                local hl = ctx.kind_hl
+                if vim.tbl_contains({ "Path" }, ctx.source_name) then
+                  local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
+                  if dev_icon then
+                    hl = dev_hl
+                  end
+                end
+                return hl
               end,
             },
           },
           columns = {
-            { "kind_icon" },
-            { "label", "label_description", "kind", gap = 1 },
+            { "kind_icon", "label", gap = 1 },
+            { "kind" },
           },
           treesitter = { "lsp" },
         },

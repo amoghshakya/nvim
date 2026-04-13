@@ -21,20 +21,59 @@ return {
       },
       "mason-org/mason-lspconfig.nvim",
       {
-        "j-hui/fidget.nvim",
-        event = "LspAttach",
-        opts = {
-          progress = {
-            ignore = {
-              "ltex_plus",
+        "onsails/lspkind.nvim",
+        config = function()
+          -- setup() is also available as an alias
+          require("lspkind").init({
+            -- defines how annotations are shown
+            -- default: symbol
+            -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
+            mode = "symbol_text",
+
+            -- default symbol map
+            -- can be either 'default' (requires nerd-fonts font) or
+            -- 'codicons' for codicon preset (requires vscode-codicons font)
+            --
+            -- default: 'default'
+            preset = "codicons",
+
+            -- override preset symbols
+            --
+            -- default: {}
+            symbol_map = {
+              Text = "󰉿",
+              Method = "󰆧",
+              Function = "󰊕",
+              Constructor = "",
+              Field = "󰜢",
+              Variable = "󰀫",
+              Class = "󰠱",
+              Interface = "",
+              Module = "",
+              Property = "󰜢",
+              Unit = "󰑭",
+              Value = "󰎠",
+              Enum = "",
+              Keyword = "󰌋",
+              Snippet = "",
+              Color = "󰏘",
+              File = "󰈙",
+              Reference = "󰈇",
+              Folder = "󰉋",
+              EnumMember = "",
+              Constant = "󰏿",
+              Struct = "󰙅",
+              Event = "",
+              Operator = "󰆕",
+              TypeParameter = "",
             },
-          },
-        },
+          })
+        end,
       },
     },
     config = function()
       vim.api.nvim_create_autocmd("LspAttach", {
-        callback = require("configs.lsp").mappings,
+        callback = require("configs.lsp").callback,
       })
 
       vim.diagnostic.config(require("configs.lsp").diagnostics)
@@ -87,20 +126,6 @@ return {
       },
     },
   },
-  -- {
-  --   "pmizio/typescript-tools.nvim",
-  --   ft = {
-  --     "typescript",
-  --     "typescriptreact",
-  --     "typescript.tsx",
-  --     "javascript",
-  --     "javascriptreact",
-  --     "javascript.jsx",
-  --     "astro",
-  --   },
-  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-  --   opts = {},
-  -- },
   {
     "yioneko/nvim-vtsls",
     event = { "VeryLazy" },
@@ -115,6 +140,7 @@ return {
   },
   {
     "Bekaboo/dropbar.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       local dropbar_api = require("dropbar.api")
       vim.keymap.set("n", "<Leader>;", dropbar_api.pick, { desc = "Pick symbols in winbar" })

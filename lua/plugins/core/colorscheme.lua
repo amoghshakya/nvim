@@ -10,10 +10,11 @@ return {
       default_integrations = true,
       auto_integrations = true,
       color_overrides = {
-        mocha = require("configs.colorscheme").gruvbox.dark,
+        mocha = require("configs.colorscheme").ayu.dark,
       },
       styles = {
-        miscs = {},
+        keywords = { "italic" },
+        -- miscs = {},
       },
       custom_highlights = function(colors)
         return {
@@ -34,6 +35,20 @@ return {
             fg = colors.mantle,
             bg = colors.blue,
             style = { "bold" },
+          },
+          Keyword = {
+            fg = colors.peach,
+          },
+          -- @method also links to this so you'd be updating both of them?
+          Function = {
+            fg = colors.yellow,
+          },
+          Type = {
+            fg = colors.sapphire,
+          },
+          -- make constants stand out?
+          Constant = {
+            fg = colors.flamingo,
           },
         }
       end,

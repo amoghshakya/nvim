@@ -60,3 +60,4 @@ end, { desc = "Close buffer", silent = true })
 -- Tabs
 map("n", "<leader>ct", "<Cmd>tabclose<CR>", { desc = "[C]lose [T]ab", silent = true })
 map("n", "<leader>nt", "<Cmd>tabnew<CR>", { desc = "[N]ew [T]ab", silent = true })
+map("n", "<C-t>", "gt", { desc = "Next tab", silent = true })

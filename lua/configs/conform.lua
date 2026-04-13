@@ -16,7 +16,7 @@ local opts = {
     javascriptreact = { "biome", "prettierd", "prettier", stop_after_first = true },
     typescript = { "biome", "prettierd", "prettier", stop_after_first = true },
     typescriptreact = { "biome", "prettierd", "prettier", stop_after_first = true },
-    astro = { "prettierd", "prettier", stop_after_first = true },
+    astro = { "biome", "prettierd", "prettier", stop_after_first = true },
     json = { "biome", "prettierd", stop_after_first = true },
     jsonc = { "biome", "prettierd", stop_after_first = true },
     python = { "ruff_format" },

@@ -20,6 +20,7 @@ M.servers = {
         end
       end
 
+      ---@diagnostic disable-next-line
       client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
         runtime = {
           version = "LuaJIT",
@@ -61,6 +62,7 @@ M.servers = {
       },
     },
   },
+  biome = {},
   bashls = {},
   html = {},
   cssls = {},
@@ -126,7 +128,7 @@ M.servers = {
   qmlls = {},
 }
 
-M.mappings = function(event)
+M.callback = function(event)
   local map = function(keys, func, desc, mode)
     vim.keymap.set(mode or "n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
   end
@@ -165,9 +167,32 @@ M.mappings = function(event)
     })
   end
 
+  -- emit a progress message for LSP servers that support it
+  -- and progress bar for terminals too (Ghostty, Kitty)
+  vim.api.nvim_create_autocmd("LspProgress", {
+    buffer = event.buf,
+    callback = function(ev)
+      local value = ev.data.params.value
+      vim.api.nvim_echo({ { value.message or "done" } }, false, {
+        id = "lsp." .. ev.data.params.token,
+        kind = "progress",
+        source = "vim.lsp",
+        title = value.title,
+        status = value.kind ~= "end" and "running" or "success",
+        percent = value.percentage,
+      })
+    end,
+  })
+
+  -- Code Lens
+  -- enable codelens if LSP supports it
+  if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_codeLens, event.buf) then
+    vim.lsp.codelens.enable()
+  end
+
   -- Inlay Hints toggle
   -- This is handled by snacks so commenting out for now
-  -- if vim.lsp.inlay_hint then
+  -- if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
   --   map("<leader>th", function()
   --     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
   --   end, "[T]oggle Inlay [H]ints")
@@ -182,7 +207,13 @@ M.diagnostics = {
   underline = {
     severity = vim.diagnostic.severity.ERROR,
   },
-  jump = { float = true },
+  on_jump = function(_, bufnr)
+    vim.diagnostic.open_float({
+      bufnr = bufnr,
+      scope = "cursor",
+      focus = false,
+    })
+  end,
   signs = vim.g.have_nerd_font and {
     text = {
       [vim.diagnostic.severity.ERROR] = "󰅚 ",

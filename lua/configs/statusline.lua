@@ -173,11 +173,7 @@ local Diagnostics = {
   condition = conditions.has_diagnostics,
 
   init = function(self)
-    -- Safely fetch icons from the config
-    local config = vim.diagnostic.config() or {} -- lua ls might complain otherwise
-    -- Defensive check: if signs isn't a table with text
-    local signs = (type(config.signs) == "table" and config.signs.text)
-      or require("configs.lsp").diagnostics.signs.text -- this definitely exists
+    local signs = require("configs.lsp").diagnostics.signs.text -- this definitely exists
       or {} -- add this so lsp doesn't go crazy on us
 
     -- Store icons in 'self' so providers can see them
@@ -474,7 +470,7 @@ local OilStatus = {
 
     cwd = vim.fn.fnamemodify(cwd, ":~")
     local trail = cwd:sub(-1) == "/" and "" or "/"
-    return icon .. cwd .. trail
+    return icon .. " " .. cwd .. trail
   end,
   hl = { fg = "blue", bold = true },
   update = {

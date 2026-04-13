@@ -1,8 +1,15 @@
 return { -- % Matching
   "andymass/vim-matchup",
   event = { "BufReadPost", "BufNewFile" },
-  config = function()
-    vim.g.matchup_matchparen_deferred = 1
-    vim.g.matchup_matchparen_offscreen = {}
-  end,
+  ---@type matchup.Config
+  opts = {
+    treesitter = {
+      enabled = true,
+      stopline = 500,
+    },
+    matchparen = {
+      deferred = 1,
+      offscreen = {},
+    },
+  },
 }

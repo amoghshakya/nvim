@@ -17,6 +17,7 @@ Run `:checkhealth` to check for any missing dependencies or issues.
 - make
 - ripgrep
 - unzip
+- [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter)
 - zoxide (optional)
 
 ## Structure
