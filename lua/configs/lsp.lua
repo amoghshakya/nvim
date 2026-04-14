@@ -207,13 +207,15 @@ M.diagnostics = {
   underline = {
     severity = vim.diagnostic.severity.ERROR,
   },
-  on_jump = function(_, bufnr)
-    vim.diagnostic.open_float({
-      bufnr = bufnr,
-      scope = "cursor",
-      focus = false,
-    })
-  end,
+  jump = {
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float({
+        bufnr = bufnr,
+        scope = "cursor",
+        focus = false,
+      })
+    end,
+  },
   signs = vim.g.have_nerd_font and {
     text = {
       [vim.diagnostic.severity.ERROR] = "󰅚 ",
