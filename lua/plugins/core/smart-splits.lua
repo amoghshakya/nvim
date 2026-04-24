@@ -16,6 +16,7 @@ return {
     ignored_filetypes = {
       "neo-tree",
       "qf",
+      "snacks_picker_list",
     },
   },
   keys = {

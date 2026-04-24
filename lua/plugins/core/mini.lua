@@ -6,6 +6,10 @@ return {
     require("mini.ai").setup({
       n_lines = 500,
       silent = true,
+      mappings = { -- avoid conflict with default incremental selection
+        around_next = "aa",
+        inside_next = "ii",
+      },
     })
     require("mini.operators").setup()
     require("mini.comment").setup({

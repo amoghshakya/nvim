@@ -148,8 +148,8 @@ M.ayu = {
     overlay0 = "#565B66",
 
     surface2 = "#3C414A",
-    surface1 = "#1E222A",
-    surface0 = "#11151C",
+    surface1 = "#282a2f",
+    surface0 = "#191c20",
 
     blue = "#59C2FF",
     sapphire = "#39BAE6",

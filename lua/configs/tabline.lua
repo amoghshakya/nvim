@@ -158,8 +158,8 @@ local TablineFileNameBlock = {
     if self.is_active then
       return "TabLineSel"
       -- why not?
-      -- elseif not vim.api.nvim_buf_is_loaded(self.bufnr) then
-      --   return { fg = "gray" }
+    elseif not vim.api.nvim_buf_is_loaded(self.bufnr) then
+      return { fg = "gray" }
     else
       return "TabLine"
     end
@@ -196,9 +196,9 @@ local TablineCloseButton = {
         not vim.api.nvim_get_option_value("modifiable", { buf = self.bufnr })
         or vim.api.nvim_get_option_value("readonly", { buf = self.bufnr })
       then
-        return "  " -- Lock Icon
+        return "   " -- Lock Icon
       end
-      return "  " -- Close Icon
+      return "   " -- Close Icon
     end
   end,
   hl = function(self)
@@ -228,15 +228,22 @@ local TablineCloseButton = {
   },
 }
 
--- could add surround here, but I don't want to add extra padding here
--- leaving the surround function as it is in case I change my mind
-local TablineBufferBlock = utils.surround({ "", "" }, function(self)
-  if self.is_active then
-    return utils.get_highlight("TabLineSel").bg
-  else
-    return utils.get_highlight("TabLine").bg
-  end
-end, { TablineFileNameBlock, TablineCloseButton })
+local TablineBufferBlock = {
+  {
+    utils.surround({ "", "" }, function(self)
+      if self.is_active then
+        return utils.get_highlight("TabLineSel").bg
+      else
+        return utils.get_highlight("TabLine").bg
+      end
+    end, { TablineFileNameBlock, TablineCloseButton }),
+  },
+  hl = function(self)
+    if self.is_active then
+      return { underline = true, sp = "blue" }
+    end
+  end,
+}
 
 -- this is the default function used to retrieve buffers
 local get_bufs = function()
@@ -260,7 +267,7 @@ vim.api.nvim_create_autocmd({ "VimEnter", "UIEnter", "BufAdd", "BufDelete", "Buf
       end
 
       -- Update showtabline
-      if #buflist_cache > 1 then
+      if #buflist_cache >= 1 then
         vim.o.showtabline = 2
       elseif vim.o.showtabline ~= 1 then
         vim.o.showtabline = 1
@@ -291,7 +298,7 @@ M.TabLine = {
 }
 
 -- Yep, with heirline we're driving manual!
--- vim.o.showtabline = 2 -- 2 means always show tabline
+vim.o.showtabline = 2 -- 2 means always show tabline
 vim.cmd([[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])
 
 return M

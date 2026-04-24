@@ -125,7 +125,18 @@ M.servers = {
     filetypes = { "tex", "latex", "markdown", "typst" },
   },
   gopls = {},
-  qmlls = {},
+  qmlls = {
+    cmd = { "qmlls", "-E" },
+  },
+  ruby_lsp = {
+    -- init_options = {
+    --   addonSettings = {
+    --     ["Ruby LSP Rails"] = {
+    --       enablePendingMigrationsPrompt = false,
+    --     },
+    --   },
+    -- },
+  },
 }
 
 M.callback = function(event)

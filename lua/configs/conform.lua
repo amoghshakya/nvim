@@ -37,6 +37,7 @@ local opts = {
     blade = { "blade-formatter" },
     qml = { "qmlformat" },
     toml = { "taplo" },
+    ruby = { "rubocop" },
   },
   formatters = {
     latexindent = {

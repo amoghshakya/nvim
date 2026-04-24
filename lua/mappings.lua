@@ -65,3 +65,21 @@ map("n", "<C-t>", "gt", { desc = "Next tab", silent = true })
 -- Undotree
 vim.cmd("packadd nvim.undotree")
 map("n", "<leader>u", require("undotree").open, { desc = "Open [U]ndotree" })
+
+-- incremental selection treesitter/lsp using - and +
+-- this is "+" which is Shift and "="
+vim.keymap.set({ "n", "x", "o" }, "+", function()
+  if vim.treesitter.get_parser(nil, nil, { error = false }) then
+    require("vim.treesitter._select").select_parent(vim.v.count1)
+  else
+    vim.lsp.buf.selection_range(vim.v.count1)
+  end
+end, { desc = "Select parent treesitter node or outer incremental lsp selections" })
+
+vim.keymap.set({ "n", "x", "o" }, "-", function()
+  if vim.treesitter.get_parser(nil, nil, { error = false }) then
+    require("vim.treesitter._select").select_child(vim.v.count1)
+  else
+    vim.lsp.buf.selection_range(-vim.v.count1)
+  end
+end, { desc = "Select child treesitter node or inner incremental lsp selections" })
