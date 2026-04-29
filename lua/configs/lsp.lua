@@ -42,9 +42,10 @@ M.servers = {
       Lua = {},
     },
   },
+  docker_language_server = {},
   ty = {},
-  -- tsgo = {},
-  vtsls = {},
+  tsgo = {},
+  -- vtsls = {},
   tinymist = {
     ---@type lspconfig.settings.tinymist
     settings = {
@@ -181,11 +182,10 @@ M.callback = function(event)
   -- emit a progress message for LSP servers that support it
   -- and progress bar for terminals too (Ghostty, Kitty)
   vim.api.nvim_create_autocmd("LspProgress", {
-    buffer = event.buf,
     callback = function(ev)
       local value = ev.data.params.value
       vim.api.nvim_echo({ { value.message or "done" } }, false, {
-        id = "lsp." .. ev.data.params.token,
+        id = "lsp." .. ev.data.client_id,
         kind = "progress",
         source = "vim.lsp",
         title = value.title,

@@ -1,5 +1,6 @@
 return {
   "folke/sidekick.nvim",
+  ---@type sidekick.config
   opts = {
     -- add any options here
     cli = {
@@ -8,19 +9,11 @@ return {
         enabled = true,
       },
     },
+    nes = {
+      enabled = false, -- going to let copilot-lsp handle that
+    },
   },
   keys = {
-    {
-      "<C-y>",
-      function()
-        -- if there is a next edit, jump to it, otherwise apply it if any
-        if not require("sidekick").nes_jump_or_apply() then
-          return "<C-y>" -- fallback to normal behavior
-        end
-      end,
-      expr = true,
-      desc = "Goto/Apply Next Edit Suggestion",
-    },
     {
       "<c-.>",
       function()

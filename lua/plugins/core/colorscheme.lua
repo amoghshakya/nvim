@@ -40,9 +40,9 @@ return {
             fg = colors.peach,
           },
           -- @method also links to this so you'd be updating both of them?
-          Function = {
-            fg = colors.yellow,
-          },
+          -- Function = {
+          --   fg = colors.yellow,
+          -- },
           Type = {
             fg = colors.sapphire,
           },

@@ -13,9 +13,13 @@ vim.g.maplocalleader = "\\"
 -- Set to true if using a Nerd Font
 vim.g.have_nerd_font = true
 
-require("options") -- Load options
-require("mappings") -- Load key mappings
-require("autocmds") -- Load autocommands
+if vim.g.vscode then
+  require("code")
+else
+  require("options") -- Load options
+  require("mappings") -- Load key mappings
+  require("autocmds") -- Load autocommands
+end
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -49,7 +53,6 @@ if vim.g.vscode then
       import = "plugins.vscode",
     },
   })
-  require("code")
 else
   require("lazy").setup({
     spec = {

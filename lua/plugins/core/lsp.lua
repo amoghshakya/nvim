@@ -126,13 +126,13 @@ return {
       },
     },
   },
-  {
-    "yioneko/nvim-vtsls",
-    event = { "VeryLazy" },
-    dependencies = { "neovim/nvim-lspconfig" },
-    opts = nil,
-    config = false,
-  },
+  -- {
+  --   "yioneko/nvim-vtsls",
+  --   event = { "VeryLazy" },
+  --   dependencies = { "neovim/nvim-lspconfig" },
+  --   opts = nil,
+  --   config = false,
+  -- },
   {
     "windwp/nvim-ts-autotag",
     event = { "BufReadPre", "BufNewFile" },

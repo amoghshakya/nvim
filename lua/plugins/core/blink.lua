@@ -160,6 +160,9 @@ return {
         lua = { inherit_defaults = true, "lazydev" },
       },
       providers = {
+        lsp = {
+          score_offset = 100,
+        },
         lazydev = {
           module = "lazydev.integrations.blink",
           score_offset = 100,
@@ -167,7 +170,10 @@ return {
         copilot = {
           name = "copilot",
           module = "blink-copilot",
-          score_offset = 10,
+          -- this is so annoying, copilot always suggests crap horseshit, i'd
+          -- remove it but sometimes it comes up with a good suggestion
+          -- NOTE: future self: consider getting rid of copilot and ai slop
+          score_offset = 1,
           async = true,
         },
       },

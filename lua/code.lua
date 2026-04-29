@@ -89,13 +89,13 @@ end, {
 })
 
 -- Focus file explorer
--- map("n", "<leader>e", function()
---   vim.fn.VSCodeNotify("workbench.view.explorer")
--- end, {
---   desc = "Focus on Explorer",
---   silent = true,
---   remap = false,
--- })
+map("n", "<leader>e", function()
+  vim.fn.VSCodeNotify("workbench.view.explorer")
+end, {
+  desc = "Focus on Explorer",
+  silent = true,
+  remap = false,
+})
 
 -- <leader>nn for new empty buffer
 map("n", "<leader>nn", function()
@@ -200,3 +200,17 @@ end, { expr = true, silent = true, desc = "Trigger completion", remap = true })
 map("i", "<S-Tab>", function()
   vim.fn.VSCodeNotify("selectPrevSuggestion")
 end, { expr = true, silent = true, desc = "Trigger completion", remap = true })
+
+-- map <C-h/j/k/l> to navigate between windows
+map("n", "<C-h>", function()
+  vim.fn.VSCodeNotify("workbench.action.navigateLeft")
+end, { desc = "Move focus to the left window" })
+map("n", "<C-l>", function()
+  vim.fn.VSCodeNotify("workbench.action.navigateRight")
+end, { desc = "Move focus to the right window" })
+map("n", "<C-j>", function()
+  vim.fn.VSCodeNotify("workbench.action.navigateDown")
+end, { desc = "Move focus to the lower window" })
+map("n", "<C-k>", function()
+  vim.fn.VSCodeNotify("workbench.action.navigateUp")
+end, { desc = "Move focus to the upper window" })

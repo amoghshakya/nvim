@@ -30,6 +30,8 @@ o.mousemoveevent = true
 -- Don't show the mode, since it's already in the status line
 o.showmode = false
 
+o.ruler = false
+
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -107,31 +109,61 @@ opt.shortmess:append("I")
 -- Experimental
 -- With UI2, there is not more annoying “Press Enter” prompt after you run a command.
 -- use `g<` to check the full messages
--- require("vim._core.ui2").enable({
---   enable = true,
---   msg = { -- Options related to the message module.
---     ---@type 'cmd'|'msg' Default message target, either in the
---     ---cmdline or in a separate ephemeral message window.
---     ---@type string|table<string, 'cmd'|'msg'|'pager'> Default message target
---     ---or table mapping |ui-messages| kinds and triggers to a target.
---     targets = "cmd",
---     cmd = { -- Options related to messages in the cmdline window.
---       height = 0.5, -- Maximum height while expanded for messages beyond 'cmdheight'.
---     },
---     dialog = { -- Options related to dialog window.
---       height = 0.5, -- Maximum height.
---     },
---     msg = { -- Options related to msg window.
---       height = 0.5, -- Maximum height.
---       timeout = 4000, -- Time a message is visible in the message window.
---     },
---     pager = { -- Options related to message window.
---       height = 0.5, -- Maximum height.
---     },
---   },
--- })
+if not vim.g.vscode then -- check for vscode neovim extension
+  o.cmdheight = 1
+  require("vim._core.ui2").enable({
+    enable = true,
+    msg = {
+      targets = "cmd",
+      cmd = {
+        height = 0.3,
+      },
+      dialog = {
+        height = 0.3,
+      },
+      msg = {
+        height = 0.3,
+        timeout = 2000,
+      },
+      pager = {
+        height = 0.3,
+      },
+    },
+  })
+
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "msg",
+    callback = function(args)
+      local ui2 = require("vim._core.ui2")
+      local win = ui2.wins and ui2.wins.msg
+
+      if win and vim.api.nvim_win_is_valid(win) then
+        local stats = vim.api.nvim_list_uis()[1]
+        local width = stats.width
+        local height = stats.height
+
+        vim.api.nvim_win_set_config(win, {
+          relative = "editor",
+          border = "none",
+          anchor = "SE",
+          row = height - 1,
+          col = width,
+          style = "minimal",
+        })
+
+        vim.api.nvim_set_option_value(
+          "winhighlight",
+          "Normal:Comment,FloatBorder:Normal",
+          { scope = "local", win = win }
+        )
+
+        vim.api.nvim_set_option_value("winblend", 15, { scope = "local", win = win })
+      end
+    end,
+  })
+end
 
 -- Neovide settings
-if g.neovide then
+if g.neovide and not g.vscode then
   require("neovide")
 end

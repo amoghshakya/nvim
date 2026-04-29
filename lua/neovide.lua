@@ -1,4 +1,4 @@
-vim.o.guifont = "Iosevka Nerd Font:h10"
+vim.o.guifont = "Iosevka Nerd Font:h12"
 vim.opt.linespace = 4
 vim.g.neovide_hide_mouse_when_typing = true
 vim.g.neovide_detach_on_quit = "prompt"
