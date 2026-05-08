@@ -97,42 +97,6 @@ M.rosepine = {
   },
 }
 
--- https://github.com/ember-theme/ember/blob/main/palette.json
-M.ember = {
-  ember = {
-    rosewater = "#f2b5a0",
-    flamingo = "#e89377",
-    pink = "#b07878",
-    mauve = "#988090",
-    red = "#e08060",
-    maroon = "#a65a4a",
-
-    peach = "#c09058",
-    yellow = "#c8b468",
-
-    green = "#8a9868",
-    teal = "#80a090",
-    sky = "#95afc0",
-    sapphire = "#7890a0",
-    blue = "#5d7687",
-    lavender = "#b8b0a0",
-
-    text = "#d8d0c0",
-    subtext1 = "#c2baa9",
-    subtext0 = "#aca493",
-    overlay2 = "#8e8779",
-    overlay1 = "#756f63",
-    overlay0 = "#5c574d",
-
-    surface2 = "#3b3935",
-    surface1 = "#2e2c29",
-    surface0 = "#242320",
-    base = "#1c1b19",
-    mantle = "#161513",
-    crust = "#11100f",
-  },
-}
-
 M.ayu = {
   dark = {
     base = "#0B0E14",

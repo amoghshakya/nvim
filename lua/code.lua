@@ -196,10 +196,10 @@ end, {
 -- autocompletes
 map("i", "<Tab>", function()
   vim.fn.VSCodeNotify("selectNextSuggestion")
-end, { expr = true, silent = true, desc = "Trigger completion", remap = true })
+end, { silent = true, desc = "Trigger completion", remap = true })
 map("i", "<S-Tab>", function()
   vim.fn.VSCodeNotify("selectPrevSuggestion")
-end, { expr = true, silent = true, desc = "Trigger completion", remap = true })
+end, { silent = true, desc = "Trigger completion", remap = true })
 
 -- map <C-h/j/k/l> to navigate between windows
 map("n", "<C-h>", function()

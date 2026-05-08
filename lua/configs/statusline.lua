@@ -32,9 +32,11 @@ local diff_icons = {
 local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
 
+-- heirline's is_git_repo requires gitsigns to be loaded and won't work in some
+-- cases because of that
 local function is_git_repo()
   local git_dir = vim.fn.finddir(".git", vim.fn.expand("%:p:h") .. ";")
-  return git_dir ~= ""
+  return vim.b.gitsigns_head or git_dir ~= ""
 end
 
 local function has_git_changes()

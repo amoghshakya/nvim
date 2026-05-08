@@ -15,7 +15,7 @@ return {
     },
     bigfile = { enabled = true },
     bufdelete = { enabled = true },
-    -- dashboard = require("configs.snacks").dashboard,
+    dashboard = require("configs.snacks").dashboard,
     explorer = require("configs.snacks").explorer,
     indent = {
       enabled = true,

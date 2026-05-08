@@ -9,6 +9,10 @@ return {
         "mason-org/mason.nvim",
         cmd = "Mason",
         opts = {
+          registries = {
+            "github:mason-org/mason-registry",
+            "github:Crashdummyy/mason-registry",
+          },
           path = "skip",
           ui = {
             icons = {
@@ -126,13 +130,13 @@ return {
       },
     },
   },
-  -- {
-  --   "yioneko/nvim-vtsls",
-  --   event = { "VeryLazy" },
-  --   dependencies = { "neovim/nvim-lspconfig" },
-  --   opts = nil,
-  --   config = false,
-  -- },
+  {
+    "yioneko/nvim-vtsls",
+    ft = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
+    dependencies = { "neovim/nvim-lspconfig" },
+    opts = nil,
+    config = false,
+  },
   {
     "windwp/nvim-ts-autotag",
     event = { "BufReadPre", "BufNewFile" },

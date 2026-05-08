@@ -47,25 +47,15 @@ return {
       preset = "enter",
       ["<CR>"] = { "accept", "fallback" },
       ["<Tab>"] = {
-        function(cmp)
-          if cmp.snippet_active() then
-            return cmp.snippet_forward()
-          end
-          return nil
-        end,
         "select_next",
         "fallback",
       },
       ["<S-Tab>"] = {
-        function(cmp)
-          if cmp.snippet_active() then
-            return cmp.snippet_backward()
-          end
-          return nil
-        end,
         "select_prev",
         "fallback",
       },
+      ["<C-l>"] = { "snippet_forward", "fallback_to_mappings" },
+      ["<C-h>"] = { "snippet_backward", "fallback_to_mappings" },
     },
 
     appearance = {
@@ -127,15 +117,15 @@ return {
             },
           },
           columns = {
-            { "kind_icon", "label", gap = 1 },
-            { "kind" },
+            { "kind_icon", "label", "label_description", gap = 1 },
+            -- { "kind" },
           },
           treesitter = { "lsp" },
         },
       },
       documentation = {
         auto_show = true,
-        auto_show_delay_ms = 300,
+        auto_show_delay_ms = 200,
       },
       trigger = {
         show_on_keyword = true,
@@ -155,13 +145,20 @@ return {
     },
 
     sources = {
-      default = { "lsp", "path", "snippets", "copilot" },
+      default = { "lsp", "path", "snippets", "buffer", "copilot" },
       per_filetype = {
-        lua = { inherit_defaults = true, "lazydev" },
+        lua = { inherit_defaults = true, "lazydev", "buffer" },
       },
       providers = {
         lsp = {
           score_offset = 100,
+        },
+        snippets = {
+          max_items = 6,
+        },
+        buffer = {
+          max_items = 4,
+          min_keyword_length = 4,
         },
         lazydev = {
           module = "lazydev.integrations.blink",
@@ -170,10 +167,11 @@ return {
         copilot = {
           name = "copilot",
           module = "blink-copilot",
-          -- this is so annoying, copilot always suggests crap horseshit, i'd
-          -- remove it but sometimes it comes up with a good suggestion
+          -- this is so annoying, copilot always suggests crap horseshit,
+          -- i'd remove it but sometimes it comes up with a good suggestion
           -- NOTE: future self: consider getting rid of copilot and ai slop
-          score_offset = 1,
+          score_offset = -50,
+          max_items = 1,
           async = true,
         },
       },

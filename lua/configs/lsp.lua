@@ -44,8 +44,28 @@ M.servers = {
   },
   docker_language_server = {},
   ty = {},
-  tsgo = {},
-  -- vtsls = {},
+  -- tsgo = {},
+  vtsls = {
+    ---@type lspconfig.settings.vtsls
+    settings = {
+      vtsls = {
+        autoUseWorkspaceTsdk = true,
+        experimental = {
+          completion = {
+            enableServerSideFuzzyMatch = true,
+          },
+        },
+      },
+      typescript = {
+        updateImportsOnFileMove = {
+          enabled = "always",
+        },
+        suggest = {
+          completeFunctionCalls = true,
+        },
+      },
+    },
+  },
   tinymist = {
     ---@type lspconfig.settings.tinymist
     settings = {
@@ -67,7 +87,13 @@ M.servers = {
   bashls = {},
   html = {},
   cssls = {},
-  astro = {},
+  astro = {
+    init_options = {
+      typescript = {
+        tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
+      },
+    },
+  },
   tailwindcss = {},
   emmet_language_server = {},
   -- basedpyright = {},
@@ -129,15 +155,7 @@ M.servers = {
   qmlls = {
     cmd = { "qmlls", "-E" },
   },
-  ruby_lsp = {
-    -- init_options = {
-    --   addonSettings = {
-    --     ["Ruby LSP Rails"] = {
-    --       enablePendingMigrationsPrompt = false,
-    --     },
-    --   },
-    -- },
-  },
+  yamlls = {},
 }
 
 M.callback = function(event)

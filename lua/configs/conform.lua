@@ -10,13 +10,13 @@ local opts = {
     go = { "gofmt" },
     lua = { "stylua" },
     css = { "biome", "prettierd", "prettier", stop_after_first = true },
-    scss = { "prettierd" },
+    scss = { "biome", "prettierd", "prettier", stop_after_first = true },
     html = { "biome", "prettierd", "prettier", stop_after_first = true },
     javascript = { "biome", "prettierd", "prettier", stop_after_first = true },
     javascriptreact = { "biome", "prettierd", "prettier", stop_after_first = true },
     typescript = { "biome", "prettierd", "prettier", stop_after_first = true },
     typescriptreact = { "biome", "prettierd", "prettier", stop_after_first = true },
-    astro = { "biome", "prettierd", "prettier", stop_after_first = true },
+    astro = { "prettier", stop_after_first = true },
     json = { "biome", "prettierd", stop_after_first = true },
     jsonc = { "biome", "prettierd", stop_after_first = true },
     python = { "ruff_format" },
@@ -40,14 +40,6 @@ local opts = {
     ruby = { "rubocop" },
   },
   formatters = {
-    latexindent = {
-      command = "latexindent",
-      args = {
-        "-y=defaultIndent: '  '",
-        "-m",
-        "-g=/dev/null",
-      },
-    },
     ["blade-formatter"] = {
       command = "blade-formatter",
       args = { "--stdin", "--sort-tailwindcss-classes" },
@@ -58,7 +50,7 @@ local opts = {
     },
   },
   format_on_save = {
-    timeout_ms = 500,
+    timeout_ms = 1000,
   },
 }
 

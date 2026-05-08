@@ -8,7 +8,7 @@ return {
       init = function()
         vim.g.copilot_nes_debounce = 500
         vim.lsp.enable("copilot_ls")
-        vim.keymap.set("n", "<C-y>", function()
+        vim.keymap.set({ "n", "i" }, "<C-y>", function()
           local bufnr = vim.api.nvim_get_current_buf()
           local state = vim.b[bufnr].nes_state
           if state then

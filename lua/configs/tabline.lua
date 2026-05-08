@@ -189,7 +189,7 @@ local TablineFileNameBlock = {
 local TablineCloseButton = {
   provider = function(self)
     if vim.api.nvim_get_option_value("modified", { buf = self.bufnr }) then
-      return " ● " -- Modified Icon
+      return " ●  " -- Modified Icon
     else
       -- if buffer is read only, return a lock icon instead of a close icon
       if
