@@ -83,18 +83,19 @@ M.servers = {
       },
     },
   },
-  biome = {},
+  -- biome = {},
   bashls = {},
   html = {},
   cssls = {},
-  astro = {
-    init_options = {
-      typescript = {
-        tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
+  astro = {},
+  tailwindcss = {
+    ---@type lspconfig.settings.tailwindcss
+    settings = {
+      tailwindCSS = {
+        classFunctions = { "clsx", "cn", "twMerge", "cva" },
       },
     },
   },
-  tailwindcss = {},
   emmet_language_server = {},
   -- basedpyright = {},
   rust_analyzer = {},
@@ -216,6 +217,7 @@ M.callback = function(event)
   -- Code Lens
   -- enable codelens if LSP supports it
   if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_codeLens, event.buf) then
+    -- currently, no way to customize where this can be placed
     vim.lsp.codelens.enable()
   end
 

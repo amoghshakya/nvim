@@ -10,23 +10,20 @@ return {
   ---@type snacks.Config
   opts = {
     ---@type snacks.animate.Config
-    animate = {
-      easing = "inOutSine",
-    },
+    animate = { easing = "inOutSine" },
     bigfile = { enabled = true },
     bufdelete = { enabled = true },
     dashboard = require("configs.snacks").dashboard,
     explorer = require("configs.snacks").explorer,
-    indent = {
+    indent = { enabled = true },
+    input = {
       enabled = true,
+      win = {
+        backdrop = 60,
+      },
     },
-    input = { enabled = true },
-    lazygit = {
-      enabled = true,
-    },
-    notifier = {
-      enabled = true,
-    },
+    lazygit = { enabled = true },
+    notifier = { enabled = true },
     picker = require("configs.snacks").picker,
     quickfile = {
       enabled = true,
@@ -34,9 +31,7 @@ return {
     },
     rename = { enabled = true },
     scope = { enabled = true },
-    statuscolumn = {
-      enabled = true,
-    },
+    statuscolumn = { enabled = true },
     terminal = require("configs.snacks").terminal,
     words = { enabled = true },
   },

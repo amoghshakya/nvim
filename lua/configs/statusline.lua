@@ -33,7 +33,7 @@ local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
 
 -- heirline's is_git_repo requires gitsigns to be loaded and won't work in some
--- cases because of that
+-- cases because gitsigns is lazy loaded
 local function is_git_repo()
   local git_dir = vim.fn.finddir(".git", vim.fn.expand("%:p:h") .. ";")
   return vim.b.gitsigns_head or git_dir ~= ""

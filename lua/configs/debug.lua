@@ -73,6 +73,7 @@ M.config = function()
       -- Update this to ensure that you have the debuggers for the langs you want
       -- "delve",
       "codelldb",
+      "netcoredbg",
     },
   })
 
@@ -136,10 +137,45 @@ M.config = function()
       type = "codelldb",
       request = "launch",
       program = function()
-        return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        -- return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        return coroutine.create(function(dap_run_co)
+          vim.ui.input({
+            prompt = "Path to executable",
+            default = vim.fn.getcwd() .. "/",
+            completion = "file",
+          }, function(input)
+            coroutine.resume(dap_run_co, input)
+          end)
+        end)
       end,
       cwd = "${workspaceFolder}",
       stopOnEntry = false,
+    },
+  }
+
+  -- C#/dotnet
+  dap.adapters.coreclr = {
+    type = "executable",
+    command = "netcoredbg",
+    args = { "--interpreter=vscode" },
+  }
+  dap.configurations.cs = {
+    {
+      type = "coreclr",
+      name = "launch - netcoredbg",
+      request = "launch",
+      program = function()
+        -- return vim.fn.input("Path to dll", vim.fn.getcwd() .. "/bin/Debug/", "file")
+        return coroutine.create(function(dap_run_co)
+          vim.ui.input({
+            prompt = "Path to dll",
+            default = vim.fn.getcwd() .. "/bin/Debug/",
+            completion = "file",
+          }, function(input)
+            coroutine.resume(dap_run_co, input)
+          end)
+        end)
+      end,
     },
   }
 end

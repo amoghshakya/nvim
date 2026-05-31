@@ -353,6 +353,11 @@ M.picker = {
         { win = "preview", title = "{preview}", height = 0.4, border = "top" },
       },
     },
+    vscode = {
+      layout = {
+        backdrop = 60,
+      },
+    },
   },
   sources = {
     files = {

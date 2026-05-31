@@ -14,6 +14,9 @@ vim.g.maplocalleader = "\\"
 vim.g.have_nerd_font = true
 
 if vim.g.vscode then
+  vim.o.ignorecase = true
+  vim.o.smartcase = true
+  vim.o.clipboard = "unnamedplus"
   require("code")
 else
   require("options") -- Load options

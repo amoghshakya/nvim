@@ -22,6 +22,7 @@ local opts = {
     python = { "ruff_format" },
     c = { "clang-format" },
     cpp = { "clang-format" },
+    cs = { "csharpier", stop_after_first = true },
     rust = { "rustfmt" },
     tex = {
       "tex-fmt",

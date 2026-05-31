@@ -8,7 +8,7 @@ return {
     opts = {
       flavour = "mocha", -- latte, frappe, macchiato, mocha or auto
       default_integrations = true,
-      auto_integrations = true,
+      auto_integrations = false,
       color_overrides = {
         mocha = require("configs.colorscheme").ayu.dark,
       },
@@ -16,8 +16,19 @@ return {
         keywords = { "italic" },
         -- miscs = {},
       },
+      lsp_styles = {
+        underlines = {
+          errors = { "undercurl" },
+        },
+      },
       custom_highlights = function(colors)
         return {
+          NormalFloat = {
+            bg = colors.base,
+          },
+          FloatBorder = {
+            bg = colors.base,
+          },
           SnacksPickerInputTitle = {
             fg = colors.base,
             bg = colors.red,
@@ -49,6 +60,22 @@ return {
           -- make constants stand out?
           Constant = {
             fg = colors.flamingo,
+          },
+          BlinkCmpMenuBorder = {
+            bg = colors.base,
+          },
+          BlinkCmpMenu = {
+            bg = colors.base,
+          },
+          BlinkCmpMenuSelection = {
+            bg = colors.yellow,
+            fg = colors.base,
+          },
+          BlinkCmpDocBorder = {
+            bg = colors.base,
+          },
+          BlinkCmpDoc = {
+            bg = colors.base,
           },
         }
       end,

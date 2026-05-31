@@ -87,8 +87,9 @@ return {
         },
       },
       menu = {
+        direction_priority = { "s" },
         draw = {
-          padding = { 1, 1 },
+          padding = 1,
           components = {
             kind_icon = {
               text = function(ctx)
@@ -102,7 +103,7 @@ return {
                   icon = require("lspkind").symbol_map[ctx.kind] or ""
                 end
 
-                return icon .. ctx.icon_gap
+                return " " .. icon .. " "
               end,
               highlight = function(ctx)
                 local hl = ctx.kind_hl
@@ -117,8 +118,8 @@ return {
             },
           },
           columns = {
-            { "kind_icon", "label", "label_description", gap = 1 },
-            -- { "kind" },
+            { "label", "label_description", gap = 1 },
+            { "kind_icon", "kind", gap = 1 },
           },
           treesitter = { "lsp" },
         },
@@ -152,9 +153,6 @@ return {
       providers = {
         lsp = {
           score_offset = 100,
-        },
-        snippets = {
-          max_items = 6,
         },
         buffer = {
           max_items = 4,

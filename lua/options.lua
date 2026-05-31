@@ -133,7 +133,7 @@ if not vim.g.vscode then -- check for vscode neovim extension
 
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "msg",
-    callback = function(args)
+    callback = function(_)
       local ui2 = require("vim._core.ui2")
       local win = ui2.wins and ui2.wins.msg
 
