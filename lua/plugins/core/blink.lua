@@ -31,9 +31,9 @@ return {
             require("luasnip").filetype_extend("blade", { "html" })
           end,
         },
+        "onsails/lspkind.nvim",
       },
     },
-    "fang2hou/blink-copilot",
   },
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
@@ -146,7 +146,7 @@ return {
     },
 
     sources = {
-      default = { "lsp", "path", "snippets", "buffer", "copilot" },
+      default = { "lsp", "path", "snippets", "buffer" },
       per_filetype = {
         lua = { inherit_defaults = true, "lazydev", "buffer" },
       },
@@ -161,16 +161,6 @@ return {
         lazydev = {
           module = "lazydev.integrations.blink",
           score_offset = 100,
-        },
-        copilot = {
-          name = "copilot",
-          module = "blink-copilot",
-          -- this is so annoying, copilot always suggests crap horseshit,
-          -- i'd remove it but sometimes it comes up with a good suggestion
-          -- NOTE: future self: consider getting rid of copilot and ai slop
-          score_offset = -50,
-          max_items = 1,
-          async = true,
         },
       },
     },

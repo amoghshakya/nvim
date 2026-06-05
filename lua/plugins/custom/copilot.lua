@@ -2,27 +2,19 @@ return {
   "zbirenbaum/copilot.lua",
   event = "InsertEnter",
   cmd = "Copilot",
-  dependencies = {
-    -- {
-    --   "copilotlsp-nvim/copilot-lsp",
-    --   init = function()
-    --     vim.g.copilot_nes_debounce = 1000
-    --   end,
-    -- },
-  },
   opts = {
     panel = {
       auto_refresh = true,
     },
     suggestion = {
-      auto_trigger = false,
+      auto_trigger = true,
       keymap = {
         accept = "<A-l>",
       },
     },
     nes = {
       enabled = false,
-      auto_trigger = false,
+      auto_trigger = true,
       keymap = {
         accept_and_goto = "<C-y>",
         next = "<A-n>",

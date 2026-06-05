@@ -29,24 +29,6 @@ return {
           FloatBorder = {
             bg = colors.base,
           },
-          SnacksPickerInputTitle = {
-            fg = colors.base,
-            bg = colors.red,
-          },
-          SnacksPickerPreviewTitle = {
-            fg = colors.base,
-            bg = colors.green,
-          },
-          SnacksPickerTitle = {
-            fg = colors.base,
-            bg = colors.blue,
-            style = { "bold" },
-          },
-          SnacksPickerBoxTitle = {
-            fg = colors.mantle,
-            bg = colors.blue,
-            style = { "bold" },
-          },
           Keyword = {
             fg = colors.peach,
           },

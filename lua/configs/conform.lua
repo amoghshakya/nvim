@@ -32,7 +32,7 @@ local opts = {
     plaintex = { "latexindent" },
     bib = { "bibtex-tidy" },
     typst = { "typstyle" },
-    markdown = { "markdownlint", "prettier" },
+    markdown = { "prettier" },
     htmldjango = { "djlint" },
     sql = { "sql_formatter" },
     blade = { "blade-formatter" },
@@ -51,7 +51,7 @@ local opts = {
     },
   },
   format_on_save = {
-    timeout_ms = 1000,
+    timeout_ms = 3000,
   },
 }
 

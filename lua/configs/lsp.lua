@@ -39,7 +39,11 @@ M.servers = {
     end,
     ---@type lspconfig.settings.lua_ls
     settings = {
-      Lua = {},
+      Lua = {
+        codeLens = {
+          enable = false,
+        },
+      },
     },
   },
   docker_language_server = {},
@@ -172,6 +176,7 @@ M.callback = function(event)
   map("gW", require("snacks.picker").lsp_workspace_symbols, "[G]o to [W]orkspace Symbols")
   map("grn", vim.lsp.buf.rename, "[G]oto [R]e[n]ame")
   map("gra", vim.lsp.buf.code_action, "[G]oto [C]ode [A]ction", { "n", "x" })
+  map("<C-.>", vim.lsp.buf.code_action, "[G]oto [C]ode [A]ction", { "n", "x" })
   map("grD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
   local client = vim.lsp.get_client_by_id(event.data.client_id)
