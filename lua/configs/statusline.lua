@@ -175,14 +175,13 @@ local Diagnostics = {
   condition = conditions.has_diagnostics,
 
   init = function(self)
-    local signs = require("configs.lsp").diagnostics.signs.text -- this definitely exists
-      or {} -- add this so lsp doesn't go crazy on us
+    local signs = require("configs.lsp").diagnostics.signs.text or {}
+    local sev = vim.diagnostic.severity
 
-    -- Store icons in 'self' so providers can see them
-    self.error_icon = signs[vim.diagnostic.severity.ERROR]
-    self.warn_icon = signs[vim.diagnostic.severity.WARN]
-    self.info_icon = signs[vim.diagnostic.severity.INFO]
-    self.hint_icon = signs[vim.diagnostic.severity.HINT]
+    self.error_icon = signs[sev.ERROR] or "󰅚 "
+    self.warn_icon = signs[sev.WARN] or "󰀪 "
+    self.info_icon = signs[sev.INFO] or "󰋽 "
+    self.hint_icon = signs[sev.HINT] or "󰌶 "
 
     self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
     self.warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })

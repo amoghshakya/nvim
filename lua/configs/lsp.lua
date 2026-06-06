@@ -203,22 +203,6 @@ M.callback = function(event)
     })
   end
 
-  -- emit a progress message for LSP servers that support it
-  -- and progress bar for terminals too (Ghostty, Kitty)
-  vim.api.nvim_create_autocmd("LspProgress", {
-    callback = function(ev)
-      local value = ev.data.params.value
-      vim.api.nvim_echo({ { value.message or "done" } }, false, {
-        id = "lsp." .. ev.data.client_id,
-        kind = "progress",
-        source = "vim.lsp",
-        title = value.title,
-        status = value.kind ~= "end" and "running" or "success",
-        percent = value.percentage,
-      })
-    end,
-  })
-
   -- Code Lens
   -- enable codelens if LSP supports it
   if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_codeLens, event.buf) then
@@ -263,5 +247,19 @@ M.diagnostics = {
   virtual_text = true,
   virtual_lines = false,
 }
+
+vim.api.nvim_create_autocmd("LspProgress", {
+  callback = function(ev)
+    local value = ev.data.params.value
+    vim.api.nvim_echo({ { value.message or "done" } }, false, {
+      id = "lsp." .. ev.data.client_id,
+      kind = "progress",
+      source = "vim.lsp",
+      title = value.title,
+      status = value.kind ~= "end" and "running" or "success",
+      percent = value.percentage,
+    })
+  end,
+})
 
 return M

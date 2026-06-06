@@ -13,7 +13,7 @@ return {
   },
   init = function()
     vim.api.nvim_create_autocmd({ "InsertEnter", "CursorMoved" }, {
-      pattern = { "*.py", "*.lua", "*.tex" },
+      pattern = { "*.py", "*.lua", "*.tex", "*.typ" },
       callback = function()
         local line_length = vim.api.nvim_get_current_line():len()
         if line_length > 79 then
