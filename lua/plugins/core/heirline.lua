@@ -1,6 +1,5 @@
 return {
   "rebelot/heirline.nvim",
-  event = { "UIEnter" },
   config = function()
     local utils = require("heirline.utils")
     local colors = function()
