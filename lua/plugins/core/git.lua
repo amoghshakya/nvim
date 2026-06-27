@@ -11,6 +11,9 @@ return {
     keys = {
       { "<leader>gg", "<cmd>Neogit<cr>", desc = "Show Neo[g]it UI" },
     },
+    opts = {
+      graph_style = "kitty",
+    },
   },
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     "lewis6991/gitsigns.nvim",
