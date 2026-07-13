@@ -3,6 +3,11 @@ return {
   config = function()
     local utils = require("heirline.utils")
     local colors = function()
+      local function get_fg(group, fallback)
+        local hl = utils.get_highlight(group)
+        return hl and hl.fg or utils.get_highlight(fallback).fg
+      end
+
       return {
         bright_bg = utils.get_highlight("Normal").bg,
         dark_bg = utils.get_highlight("StatusLine").bg,
@@ -20,9 +25,9 @@ return {
         diag_error = utils.get_highlight("DiagnosticError").fg,
         diag_hint = utils.get_highlight("DiagnosticHint").fg,
         diag_info = utils.get_highlight("DiagnosticInfo").fg,
-        git_del = utils.get_highlight("@diff.minus").fg,
-        git_add = utils.get_highlight("@diff.plus").fg,
-        git_change = utils.get_highlight("@diff.delta").fg,
+        git_del = get_fg("@diff.minus", "DiffDelete"),
+        git_add = get_fg("@diff.plus", "DiffAdd"),
+        git_change = get_fg("@diff.delta", "DiffChange"),
       }
     end
 
@@ -35,7 +40,7 @@ return {
     vim.api.nvim_create_augroup("Heirline", { clear = true })
     vim.api.nvim_create_autocmd("ColorScheme", {
       callback = function()
-        utils.on_colorscheme(colors)
+        utils.on_colorscheme(colors())
       end,
       group = "Heirline",
     })

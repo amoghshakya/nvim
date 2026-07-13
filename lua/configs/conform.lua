@@ -49,6 +49,9 @@ local opts = {
     typstyle = {
       args = { "--wrap-text" },
     },
+    biome = {
+      require_cwd = true,
+    },
   },
   format_on_save = {
     timeout_ms = 3000,
