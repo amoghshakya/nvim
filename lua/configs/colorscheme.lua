@@ -99,11 +99,11 @@ M.rosepine = {
 
 M.ayu = {
   dark = {
-    base = "#0B0E14",
+    base = "#0E1419",
     mantle = "#0F131A",
     crust = "#05070A",
 
-    text = "#BFBDB6",
+    text = "#E6E1CF",
     subtext1 = "#A6A49C",
     subtext0 = "#8C8A82",
 
@@ -112,24 +112,27 @@ M.ayu = {
     overlay0 = "#565B66",
 
     surface2 = "#3C414A",
-    surface1 = "#282a2f",
-    surface0 = "#191c20",
+    surface1 = "#282A2F",
+    surface0 = "#191C20",
 
     blue = "#59C2FF",
     sapphire = "#39BAE6",
     sky = "#95E6CB",
-    teal = "#7FDBCA",
+    teal = "#5CC0B0",
+    green = "#7DD4A0",
 
     yellow = "#FFB454",
     peach = "#FF8F40",
 
-    maroon = "#F07178",
-    flamingo = "#F29668",
+    maroon = "#D45050",
+    flamingo = "#E885B8",
+
+    red = "#EA6C6C",
 
     mauve = "#D2A6FF",
+    pink = "#FFEE99",
+    lavender = "#36A3D9",
     rosewater = "#E6B673",
-
-    red = "#D95757",
   },
 }
 

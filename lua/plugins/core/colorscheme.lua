@@ -7,8 +7,7 @@ return {
     ---@type CatppuccinOptions
     opts = {
       flavour = "mocha", -- latte, frappe, macchiato, mocha or auto
-      default_integrations = true,
-      auto_integrations = false,
+      auto_integrations = true,
       color_overrides = {
         mocha = require("configs.colorscheme").ayu.dark,
       },

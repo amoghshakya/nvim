@@ -87,7 +87,7 @@ return {
         },
       },
       menu = {
-        direction_priority = { "s" },
+        direction_priority = { "s", "n" },
         draw = {
           padding = 1,
           components = {

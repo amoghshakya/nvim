@@ -48,7 +48,6 @@ M.servers = {
   },
   docker_language_server = {},
   ty = {},
-  -- tsgo = {},
   vtsls = {
     ---@type lspconfig.settings.vtsls
     settings = {
