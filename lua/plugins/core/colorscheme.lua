@@ -1,7 +1,7 @@
 return {
   {
     "catppuccin/nvim",
-    name = "catppuccin",
+    name = "catppuccin-nvim", -- vim also has a catppuccin theme, so we need to rename it to avoid conflicts
     lazy = false,
     priority = 1000, -- Ensure it loads first
     ---@type CatppuccinOptions

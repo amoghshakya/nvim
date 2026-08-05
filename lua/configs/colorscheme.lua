@@ -100,7 +100,7 @@ M.rosepine = {
 M.ayu = {
   dark = {
     base = "#0E1419",
-    mantle = "#0F131A",
+    mantle = "#0A0E13",
     crust = "#05070A",
 
     text = "#E6E1CF",
@@ -125,7 +125,8 @@ M.ayu = {
     peach = "#FF8F40",
 
     maroon = "#D45050",
-    flamingo = "#E885B8",
+    -- flamingo = "#E885B8",
+    flamingo = "#D97BB0",
 
     red = "#EA6C6C",
 
