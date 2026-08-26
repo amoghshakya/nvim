@@ -25,7 +25,6 @@ return {
         },
       },
       "mason-org/mason-lspconfig.nvim",
-      "onsails/lspkind.nvim",
     },
     config = function()
       vim.diagnostic.config(require("configs.lsp").diagnostics)
@@ -82,6 +81,7 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
+    event = "InsertEnter",
     opts = {
       opts = {
         enable_close = true,

@@ -31,13 +31,6 @@ M.keys = {
     desc = "[S]earch [T]odo",
   },
   {
-    "<leader>sf",
-    function()
-      Snacks.picker.files()
-    end,
-    desc = "[S]earch [F]iles",
-  },
-  {
     "<leader>sk",
     function()
       Snacks.picker.keymaps()
@@ -52,25 +45,11 @@ M.keys = {
     desc = "[S]earch [H]elp",
   },
   {
-    "<leader>sg",
-    function()
-      Snacks.picker.grep()
-    end,
-    desc = "[S]earch [G]rep",
-  },
-  {
     "<leader>ss",
     function()
       Snacks.picker()
     end,
     desc = "[S]earch [S]elect",
-  },
-  {
-    "<leader>sw",
-    function()
-      Snacks.picker.grep_word()
-    end,
-    desc = "[S]earch current [W]ord",
   },
   {
     "<leader>sr",
@@ -389,7 +368,7 @@ M.picker = {
         picker:close()
         if item then
           vim.schedule(function()
-            vim.cmd("setfiletype " .. item.text)
+            vim.bo.filetype = item.text
           end)
         end
       end,

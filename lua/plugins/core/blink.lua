@@ -31,9 +31,9 @@ return {
             require("luasnip").filetype_extend("blade", { "html" })
           end,
         },
-        "onsails/lspkind.nvim",
       },
     },
+    "onsails/lspkind.nvim",
   },
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config

@@ -165,7 +165,7 @@ M.servers = {
 
 M.callback = function(event)
   local map = function(keys, func, desc, mode)
-    vim.keymap.set(mode or "n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+    vim.keymap.set(mode or "n", keys, func, { buf = event.buf, desc = "LSP: " .. desc })
   end
 
   map("grd", require("snacks.picker").lsp_definitions, "[G]oto [D]efinition")
@@ -250,15 +250,22 @@ M.diagnostics = {
 
 vim.api.nvim_create_autocmd("LspProgress", {
   callback = function(ev)
-    local value = ev.data.params.value
-    vim.api.nvim_echo({ { value.message or "done" } }, false, {
-      id = "lsp." .. ev.data.client_id,
-      kind = "progress",
-      source = "vim.lsp",
-      title = value.title,
-      status = value.kind ~= "end" and "running" or "success",
-      percent = value.percentage,
-    })
+    pcall(function()
+      local params = ev.data and ev.data.params
+      local value = params and params.value
+      if not value then
+        return
+      end
+
+      vim.api.nvim_echo({ { value.message or "done" } }, false, {
+        id = "lsp." .. (ev.data.client_id or ""),
+        kind = "progress",
+        source = "vim.lsp",
+        title = value.title,
+        status = value.kind ~= "end" and "running" or "success",
+        percent = value.percentage,
+      })
+    end)
   end,
 })
 

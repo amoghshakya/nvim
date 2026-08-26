@@ -63,8 +63,10 @@ map("n", "<leader>nt", "<Cmd>tabnew<CR>", { desc = "[N]ew [T]ab", silent = true 
 map("n", "<C-t>", "gt", { desc = "Next tab", silent = true })
 
 -- Undotree
-vim.cmd("packadd nvim.undotree")
-map("n", "<leader>u", require("undotree").open, { desc = "Open [U]ndotree" })
+map("n", "<leader>u", function()
+  vim.cmd.packadd("nvim.undotree")
+  require("undotree").open()
+end, { desc = "Open [U]ndotree" })
 
 -- incremental selection treesitter/lsp using - and +
 -- this is "+" which is Shift and "="

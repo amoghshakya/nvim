@@ -35,8 +35,7 @@ local utils = require("heirline.utils")
 -- heirline's is_git_repo requires gitsigns to be loaded and won't work in some
 -- cases because gitsigns is lazy loaded
 local function is_git_repo()
-  local git_dir = vim.fn.finddir(".git", vim.fn.expand("%:p:h") .. ";")
-  return vim.b.gitsigns_head or git_dir ~= ""
+  return vim.b.gitsigns_head ~= nil
 end
 
 local function has_git_changes()
@@ -310,16 +309,10 @@ local GitBranch = {
   init = function(self)
     local status_dict = vim.b.gitsigns_status_dict
     if status_dict then
-      self.status_dict = vim.b.gitsigns_status_dict
+      self.status_dict = status_dict
     else
-      -- because heirline relies on gitsigns for git info
-      -- but gitsigns might not be loaded yet, we fallback to git cli
-      local head = vim.fn.systemlist("git branch --show-current 2>/dev/null")[1]
-
-      if not head then
-        head = ""
-      end
-
+      local ok, result = pcall(vim.fn.systemlist, "git branch --show-current 2>/dev/null")
+      local head = (ok and result and result[1]) or ""
       self.status_dict = { head = head }
     end
   end,
@@ -334,7 +327,8 @@ local GitBranch = {
 
 local FileNameBlock = {
   init = function(self)
-    self.filename = vim.api.nvim_buf_get_name(0)
+    local ok, name = pcall(vim.api.nvim_buf_get_name, 0)
+    self.filename = ok and name or ""
   end,
   condition = function(_)
     return not vim.tbl_contains(excluded_filetypes, vim.bo.filetype) and vim.bo.filetype ~= "help"
@@ -551,19 +545,7 @@ M.StatusLine = {
     bg = "bright_bg",
     fg = "bright_fg",
   },
-  { -- show branch when in fugitive
-    condition = function()
-      return vim.bo.filetype == "fugitive"
-    end,
-    GitBranch,
-    { provider = "%=" }, -- End of left side
-  },
-  { -- git branch will replace this when in fugitive
-    condition = function()
-      return vim.bo.filetype ~= "fugitive"
-    end,
-    ViMode,
-  },
+  ViMode,
   leftBlock,
   {
     fallthrough = true,

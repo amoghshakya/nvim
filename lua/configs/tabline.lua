@@ -151,8 +151,10 @@ local TablineDiagnostics = {
 -- Here the filename block finally comes together
 local TablineFileNameBlock = {
   init = function(self)
-    self.filename = vim.api.nvim_buf_get_name(self.bufnr)
-    self.is_modified = vim.api.nvim_get_option_value("modified", { buf = self.bufnr })
+    local ok, name = pcall(vim.api.nvim_buf_get_name, self.bufnr)
+    self.filename = ok and name or ""
+    local ok2, modified = pcall(vim.api.nvim_get_option_value, "modified", { buf = self.bufnr })
+    self.is_modified = ok2 and modified or false
   end,
   hl = function(self)
     if self.is_active then
@@ -166,12 +168,12 @@ local TablineFileNameBlock = {
   end,
   on_click = {
     callback = function(_, minwid, _, button)
-      if button == "m" then -- close on mouse middle click
+      if button == "m" then
         vim.schedule(function()
-          vim.api.nvim_buf_delete(minwid, { force = false })
+          pcall(vim.api.nvim_buf_delete, minwid, { force = false })
         end)
       else
-        vim.api.nvim_win_set_buf(0, minwid)
+        pcall(vim.api.nvim_win_set_buf, 0, minwid)
       end
     end,
     minwid = function(self)
@@ -188,21 +190,21 @@ local TablineFileNameBlock = {
 -- Close button
 local TablineCloseButton = {
   provider = function(self)
-    if vim.api.nvim_get_option_value("modified", { buf = self.bufnr }) then
-      return " ●  " -- Modified Icon
+    local ok, modified = pcall(vim.api.nvim_get_option_value, "modified", { buf = self.bufnr })
+    if ok and modified then
+      return " ●  "
     else
-      -- if buffer is read only, return a lock icon instead of a close icon
-      if
-        not vim.api.nvim_get_option_value("modifiable", { buf = self.bufnr })
-        or vim.api.nvim_get_option_value("readonly", { buf = self.bufnr })
-      then
-        return "   " -- Lock Icon
+      local ok2, ro = pcall(vim.api.nvim_get_option_value, "readonly", { buf = self.bufnr })
+      local ok3, ma = pcall(vim.api.nvim_get_option_value, "modifiable", { buf = self.bufnr })
+      if (ok3 and not ma) or (ok2 and ro) then
+        return "   "
       end
-      return "   " -- Close Icon
+      return "   "
     end
   end,
   hl = function(self)
-    if vim.api.nvim_get_option_value("modified", { buf = self.bufnr }) then
+    local ok, modified = pcall(vim.api.nvim_get_option_value, "modified", { buf = self.bufnr })
+    if ok and modified then
       return { fg = "green" }
     else
       return { fg = "gray" }
@@ -210,14 +212,13 @@ local TablineCloseButton = {
   end,
   on_click = {
     callback = function(_, minwid)
-      local is_modified = vim.api.nvim_get_option_value("modified", { buf = minwid })
-      if not is_modified then
+      local ok, modified = pcall(vim.api.nvim_get_option_value, "modified", { buf = minwid })
+      if not (ok and modified) then
         vim.schedule(function()
-          vim.api.nvim_buf_delete(minwid, { force = false })
-          vim.cmd.redrawtabline()
+          pcall(vim.api.nvim_buf_delete, minwid, { force = false })
+          pcall(vim.cmd.redrawtabline)
         end)
       else
-        -- Optional: Notify the user they can't close yet
         vim.api.nvim_echo({ { "Buffer is modified. Save before closing!", "WarningMsg" } }, false, {})
       end
     end,
@@ -255,7 +256,7 @@ end
 local buflist_cache = {}
 
 -- setup an autocmd that updates the buflist_cache every time that buffers are added/removed
-vim.api.nvim_create_autocmd({ "VimEnter", "UIEnter", "BufAdd", "BufDelete", "BufModifiedSet" }, {
+vim.api.nvim_create_autocmd({ "VimEnter", "UIEnter", "BufAdd", "BufDelete" }, {
   callback = function()
     vim.schedule(function()
       local buffers = get_bufs()
@@ -299,6 +300,12 @@ M.TabLine = {
 
 -- Yep, with heirline we're driving manual!
 vim.o.showtabline = 2 -- 2 means always show tabline
-vim.cmd([[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function()
+    if vim.tbl_contains({ "wipe", "delete" }, vim.bo.bufhidden) then
+      vim.bo.buflisted = false
+    end
+  end,
+})
 
 return M
