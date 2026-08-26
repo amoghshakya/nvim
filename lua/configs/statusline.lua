@@ -88,6 +88,7 @@ local ViMode = {
       Rvx = "V-REPLACE",
       c = "COMMAND",
       cv = "EX",
+      ce = "EX",
       ["!"] = "SHELL",
       t = "TERMINAL",
       nt = "TERMINAL",
@@ -141,11 +142,11 @@ local ViMode = {
     end
     -- local icon = ""
     -- return " " .. icon .. " %2(" .. self.mode_names[self.mode] .. "%) "
-    return " %2(" .. self.mode_names[self.mode] .. "%) "
+    return " %2(" .. (self.mode_names[self.mode] or "NORMAL") .. "%) "
   end,
   -- Same goes for the highlight. Now the foreground will change according to the current mode.
   hl = function(self)
-    local mode = self.mode:sub(1, 1) -- get only the first mode character
+    local mode = (self.mode or "n"):sub(1, 1) -- get only the first mode character
     return {
       fg = "bright_bg",
       bg = self.mode_colors[mode],

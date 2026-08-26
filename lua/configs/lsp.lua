@@ -48,6 +48,7 @@ M.servers = {
   },
   docker_language_server = {},
   ty = {},
+  ruff = {},
   vtsls = {
     ---@type lspconfig.settings.vtsls
     settings = {

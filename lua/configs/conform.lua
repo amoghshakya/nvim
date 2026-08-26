@@ -19,7 +19,6 @@ local opts = {
     astro = { "prettier", stop_after_first = true },
     json = { "biome", "prettierd", stop_after_first = true },
     jsonc = { "biome", "prettierd", stop_after_first = true },
-    python = { "ruff_format" },
     c = { "clang-format" },
     cpp = { "clang-format" },
     cs = { "csharpier", stop_after_first = true },

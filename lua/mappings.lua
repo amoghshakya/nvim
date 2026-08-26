@@ -83,3 +83,6 @@ vim.keymap.set({ "n", "x", "o" }, "<A-[>", function()
     vim.lsp.buf.selection_range(-vim.v.count1)
   end
 end, { desc = "Select child treesitter node or inner incremental lsp selections" })
+
+-- bind Ctrl C to escape to switch modes (escape key broken)
+map("i", "<C-c>", "<Esc>", { desc = "Escape insert mode" })
