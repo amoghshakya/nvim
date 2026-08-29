@@ -15,21 +15,19 @@ local Tabpage = {
     if not self.is_active then
       return "TabLine"
     else
-      return "TabLineSel"
+      return { fg = "bright_bg", bg = "dark_bg" }
     end
   end,
 }
 
 local TabpageClose = {
-  provider = "%999X  %X",
-  hl = {
-    fg = "bright_fg",
-    bg = "dark_red",
-  },
+  provider = "%999X  %X",
+  hl = { fg = "red" },
 }
 
 local TabPages = {
   condition = multi_tab_condition,
+  { provider = " " },
   { provider = "%=" },
   hl = {
     bg = "bright_bg",
@@ -42,7 +40,9 @@ local TabPages = {
       bg = "blue",
     },
   },
+  { provider = " " },
   utils.make_tablist(Tabpage),
+  { provider = " " },
   TabpageClose,
 }
 
@@ -192,7 +192,11 @@ local TablineCloseButton = {
   provider = function(self)
     local ok, modified = pcall(vim.api.nvim_get_option_value, "modified", { buf = self.bufnr })
     if ok and modified then
-      return " ●  "
+      if self.is_active then
+        return " ● "
+      else
+        return " ● "
+      end
     else
       local ok2, ro = pcall(vim.api.nvim_get_option_value, "readonly", { buf = self.bufnr })
       local ok3, ma = pcall(vim.api.nvim_get_option_value, "modifiable", { buf = self.bufnr })
@@ -206,6 +210,8 @@ local TablineCloseButton = {
     local ok, modified = pcall(vim.api.nvim_get_option_value, "modified", { buf = self.bufnr })
     if ok and modified then
       return { fg = "green" }
+    elseif self.is_active then
+      return { fg = "bright_fg" }
     else
       return { fg = "gray" }
     end
@@ -281,8 +287,8 @@ vim.api.nvim_create_autocmd({ "VimEnter", "UIEnter", "BufAdd", "BufDelete" }, {
 
 local BufferLine = utils.make_buflist(
   TablineBufferBlock,
-  { provider = " ", hl = { fg = "gray" } },
-  { provider = " ", hl = { fg = "gray" } },
+  { provider = " ", hl = { fg = "blue" } },
+  { provider = " ", hl = { fg = "blue" } },
   -- out buf_func simply returns the buflist_cache
   function()
     return buflist_cache

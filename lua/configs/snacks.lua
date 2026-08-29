@@ -91,16 +91,16 @@ M.keys = {
     end,
     desc = "[S]earch [P]rojects",
   },
-  {
-    "<leader>sn",
-    function()
-      Snacks.picker.files({
-        cwd = vim.fn.stdpath("config"),
-        title = "Neovim Configs",
-      })
-    end,
-    desc = "[S]earch [N]eovim Configs",
-  },
+  -- {
+  --   "<leader>sn",
+  --   function()
+  --     Snacks.picker.files({
+  --       cwd = vim.fn.stdpath("config"),
+  --       title = "Neovim Configs",
+  --     })
+  --   end,
+  --   desc = "[S]earch [N]eovim Configs",
+  -- },
   {
     "<leader>/",
     function()
@@ -307,14 +307,7 @@ M.picker = {
         width = 0.8,
         min_width = 120,
         height = 0.8,
-        {
-          box = "vertical",
-          border = "solid",
-          title = "{title} {live} {flags}",
-          { win = "input", height = 1, border = "bottom" },
-          { win = "list", border = "none" },
-        },
-        { win = "preview", title = "{preview}", border = "solid", width = 0.5 },
+        backdrop = 50,
       },
     },
     vertical = {
@@ -322,19 +315,16 @@ M.picker = {
         width = 0.8,
         min_width = 80,
         height = 0.8,
-        min_height = 30,
         box = "vertical",
-        border = "solid",
+        border = "single",
+        backdrop = 50,
         title = "{title} {live} {flags}",
         title_pos = "center",
-        { win = "input", height = 1, border = "bottom" },
-        { win = "list", border = "none" },
-        { win = "preview", title = "{preview}", height = 0.4, border = "top" },
       },
     },
     vscode = {
       layout = {
-        backdrop = 60,
+        backdrop = 50,
       },
     },
   },

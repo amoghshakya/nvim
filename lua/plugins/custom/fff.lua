@@ -27,6 +27,14 @@ return {
       mode = { "n", "x" },
       desc = "[S]earch current [W]ord",
     },
+    {
+      "<leader>sn",
+      function()
+        require("fff").find_files_in_dir(vim.fn.stdpath("config"))
+      end,
+      mode = { "n", "x" },
+      desc = "[S]earch [N]eovim config",
+    },
   },
   opts = {
     frecency = {
@@ -38,6 +46,9 @@ return {
     prompt = "   ",
     layout = {
       prompt_position = "top",
+    },
+    preview = {
+      line_numbers = true,
     },
   },
 }

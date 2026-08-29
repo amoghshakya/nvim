@@ -1,16 +1,12 @@
 return {
   {
     "catppuccin/nvim",
-    name = "catppuccin-nvim", -- vim also has a catppuccin theme, so we need to rename it to avoid conflicts
+    name = "catppuccin",
     lazy = false,
     priority = 1000, -- Ensure it loads first
     ---@type CatppuccinOptions
     opts = {
-      flavour = "mocha", -- latte, frappe, macchiato, mocha or auto
       auto_integrations = true,
-      color_overrides = {
-        mocha = require("configs.colorscheme").ayu.dark,
-      },
       styles = {
         keywords = { "italic" },
         -- miscs = {},
@@ -84,8 +80,24 @@ return {
       },
     },
     config = function(_, opts)
-      require("catppuccin").setup(opts)
-      vim.cmd.colorscheme("catppuccin-nvim")
+      local path = vim.fn.stdpath("config") .. "/lua/catppuccin/palettes/"
+      local files = vim.fn.globpath(path, "*", false, true)
+      local flavours = {
+        latte = 1,
+        frappe = 2,
+        macchiato = 3,
+        mocha = 4,
+      }
+
+      for i, file in ipairs(files) do
+        local name = vim.fn.fnamemodify(file, ":t:r")
+        flavours[name] = 4 + i
+      end
+
+      local catppuccin = require("catppuccin")
+      catppuccin.flavours = flavours
+      catppuccin.setup(opts)
+      vim.cmd.colorscheme("catppuccin-ayu")
     end,
   },
 }
