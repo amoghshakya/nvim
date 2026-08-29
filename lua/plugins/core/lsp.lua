@@ -24,7 +24,6 @@ return {
           },
         },
       },
-      "mason-org/mason-lspconfig.nvim",
     },
     config = function()
       vim.diagnostic.config(require("configs.lsp").diagnostics)
@@ -34,22 +33,24 @@ return {
 
       local servers = require("configs.lsp").servers or {}
       vim.schedule(function()
-        -- Only auto install servers that are not already installed, and only if they are in the mason registry
-        local mason_mapping = require("mason-lspconfig.mappings").get_all().lspconfig_to_package
-        local ensure_installed = {}
-
-        for server, _ in pairs(servers) do
-          local pkg = mason_mapping[server]
-          if type(pkg) ~= "string" or vim.fn.executable(pkg) == 0 then
-            table.insert(ensure_installed, server)
+        local registry = require("mason-registry")
+        -- Build lspconfig name -> mason package name map from registry
+        local lspconfig_to_mason = {}
+        for _, pkg_spec in ipairs(registry.get_all_package_specs()) do
+          local lspconfig_name = vim.tbl_get(pkg_spec, "neovim", "lspconfig")
+          if lspconfig_name then
+            lspconfig_to_mason[lspconfig_name] = pkg_spec.name
           end
         end
 
-        if #ensure_installed > 0 then
-          require("mason-lspconfig").setup({
-            automatic_enable = ensure_installed,
-            ensure_installed = ensure_installed,
-          })
+        for server, _ in pairs(servers) do
+          local mason_pkg = lspconfig_to_mason[server]
+          if mason_pkg then
+            local ok, pkg = pcall(registry.get_package, mason_pkg)
+            if ok and not pkg:is_installed() then
+              pkg:install()
+            end
+          end
         end
       end)
 
